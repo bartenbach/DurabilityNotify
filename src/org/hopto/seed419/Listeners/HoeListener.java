@@ -1,7 +1,6 @@
 package org.hopto.seed419.Listeners;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,26 +22,24 @@ public class HoeListener implements Listener {
     public void onPlayerHoeSoil(PlayerInteractEvent event) {
         ItemStack item = event.getPlayer().getItemInHand();
         if (Tools.isHoe(item)) {
-            System.out.println("it's a hoe");
             switch(event.getAction()) {
                 case RIGHT_CLICK_BLOCK:
                     switch (event.getClickedBlock().getType()) {
                         case DIRT:
                         case GRASS:
-                        System.out.println("dirt or grass");
-                        Player player = event.getPlayer();
-                        int usesLeft = Tools.getUsesLeft(item);
-                        System.out.println(usesLeft);
 
-                        if (usesLeft == 10) {
-                            Notify.sendMessage(player, item, usesLeft, false, ChatColor.WHITE);
-                        } else if (usesLeft == 1) {
-                            Notify.sendMessage(player, item, usesLeft, true, ChatColor.WHITE);
-                        }
-                        break;
+                            Player player = event.getPlayer();
+                            int usesLeft = Tools.getUsesLeft(item);
 
-                    default:
-                        break;
+                            if (usesLeft == 10) {
+                                Notify.sendMessage(player, item, usesLeft, false, ChatColor.WHITE);
+                            } else if (usesLeft == 1) {
+                                Notify.sendMessage(player, item, usesLeft, true, ChatColor.WHITE);
+                            }
+                            break;
+
+                        default:
+                            break;
                     }
                 default:
                     break;

@@ -1,7 +1,7 @@
 name: DurabilityReminder
 main: org.hopto.seed419.DurabilityReminder
 author: seed419
-version: 0.0.3
+version: 0.0.4
 description: Reminds players when their tools are at low durability
 
 permissions:

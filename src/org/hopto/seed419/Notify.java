@@ -22,36 +22,30 @@ public class Notify {
             } else if (usesLeft == 1) {
                 Notify.sendMessage(player, item, usesLeft, true, ChatColor.WHITE);
             }
-        }
-
-        if (Tools.isStoneTool(item)) {
+        } else if (Tools.isStoneTool(item)) {
             if (usesLeft == 10) {
                 Notify.sendMessage(player, item, usesLeft, false, ChatColor.GRAY);
             } else if (usesLeft == 1) {
                 Notify.sendMessage(player, item, usesLeft, true, ChatColor.GRAY);
             }
-        }
-
-        if (Tools.isGoldTool(item)) {
+        } else if (Tools.isGoldTool(item)) {
             if (usesLeft == 1) {
                 Notify.sendMessage(player, item, usesLeft, true, ChatColor.GOLD);
             }
-        }
-
-        if (Tools.isIronTool(item)) {
+        } else if (Tools.isIronTool(item)) {
             if (usesLeft == 10) {
                 Notify.sendMessage(player, item, usesLeft, false, ChatColor.GRAY);
             } else if (usesLeft == 1) {
                 Notify.sendMessage(player, item, usesLeft, true, ChatColor.GRAY);
             }
-        }
-
-        if (Tools.isDiamondTool(item)) {
-            if (usesLeft == 100) {
+        } else if (Tools.isDiamondTool(item)) {
+            if (usesLeft == 500) {
                 Notify.sendMessage(player, item, usesLeft, false, ChatColor.AQUA);
-            } else if (usesLeft == 10) {
+            } else if (usesLeft == 200) {
                 Notify.sendMessage(player, item, usesLeft, false, ChatColor.AQUA);
-            } else if (usesLeft == 10) {
+            } else if (usesLeft == 50) {
+                Notify.sendMessage(player, item, usesLeft, false, ChatColor.AQUA);
+            } else if (usesLeft == 1) {
                 Notify.sendMessage(player, item, usesLeft, true, ChatColor.AQUA);
             }
         }
@@ -64,34 +58,28 @@ public class Notify {
             } else if (usesLeft == 1 || usesLeft == 2) {
                 Notify.sendMessage(player, item, usesLeft, true, ChatColor.WHITE);
             }
-        }
-
-        if (Tools.isStoneTool(item)) {
+        } else if (Tools.isStoneTool(item)) {
             if (usesLeft == 10 || usesLeft == 11) {
                 Notify.sendMessage(player, item, usesLeft, false, ChatColor.GRAY);
             } else if (usesLeft == 1 || usesLeft == 2) {
                 Notify.sendMessage(player, item, usesLeft, true, ChatColor.GRAY);
             }
-        }
-
-        if (Tools.isGoldTool(item)) {
+        } else if (Tools.isGoldTool(item)) {
             if (usesLeft == 1 || usesLeft == 2) {
                 Notify.sendMessage(player, item, usesLeft, true, ChatColor.GOLD);
             }
-        }
-
-        if (Tools.isIronTool(item)) {
+        } else if (Tools.isIronTool(item)) {
             if (usesLeft == 10 || usesLeft == 11) {
                 Notify.sendMessage(player, item, usesLeft, false, ChatColor.GRAY);
             } else if (usesLeft == 1 || usesLeft == 2) {
                 Notify.sendMessage(player, item, usesLeft, true, ChatColor.GRAY);
             }
-        }
-
-        if (Tools.isDiamondTool(item)) {
-            if (usesLeft == 100 || usesLeft == 101) {
+        } else if (Tools.isDiamondTool(item)) {
+            if (usesLeft == 500 || usesLeft == 501) {
                 Notify.sendMessage(player, item, usesLeft, false, ChatColor.AQUA);
-            } else if (usesLeft == 10 || usesLeft == 11) {
+            } else if (usesLeft == 200 || usesLeft == 201) {
+                Notify.sendMessage(player, item, usesLeft, false, ChatColor.AQUA);
+            } else if (usesLeft == 50 || usesLeft == 51) {
                 Notify.sendMessage(player, item, usesLeft, false, ChatColor.AQUA);
             } else if (usesLeft == 1 || usesLeft == 2) {
                 Notify.sendMessage(player, item, usesLeft, true, ChatColor.AQUA);

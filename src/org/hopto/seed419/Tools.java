@@ -1,6 +1,5 @@
 package org.hopto.seed419;
 
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -24,7 +23,6 @@ public class Tools {
             case STONE_SPADE:
             case STONE_SWORD:
                 return true;
-
             default:
                 return false;
         }
@@ -38,7 +36,6 @@ public class Tools {
             case WOOD_SPADE:
             case WOOD_SWORD:
                 return true;
-
             default:
                 return false;
         }
@@ -52,7 +49,6 @@ public class Tools {
             case GOLD_SPADE:
             case GOLD_SWORD:
                 return true;
-
             default:
                 return false;
         }
@@ -67,7 +63,6 @@ public class Tools {
             case IRON_SWORD:
             case SHEARS:
                 return true;
-
             default:
                 return false;
         }
@@ -81,7 +76,6 @@ public class Tools {
             case DIAMOND_SPADE:
             case DIAMOND_SWORD:
                 return true;
-
             default:
                 return false;
         }
@@ -94,7 +88,6 @@ public class Tools {
             case STONE_HOE:
             case IRON_HOE:
                 return true;
-
             default:
                 return false;
         }
@@ -106,8 +99,8 @@ public class Tools {
             case DIAMOND_SWORD:
             case STONE_SWORD:
             case IRON_SWORD:
+            case GOLD_SWORD:
                 return true;
-
             default:
                 return false;
         }
@@ -119,8 +112,21 @@ public class Tools {
             case DIAMOND_PICKAXE:
             case STONE_PICKAXE:
             case IRON_PICKAXE:
+            case GOLD_PICKAXE:
                 return true;
+            default:
+                return false;
+        }
+    }
 
+    public static boolean isShovel(ItemStack is) {
+        switch (is.getType()) {
+            case WOOD_SPADE:
+            case DIAMOND_SPADE:
+            case STONE_SPADE:
+            case GOLD_SPADE:
+            case IRON_SPADE:
+                return true;
             default:
                 return false;
         }

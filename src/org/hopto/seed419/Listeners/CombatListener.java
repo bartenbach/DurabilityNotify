@@ -1,12 +1,9 @@
 package org.hopto.seed419.Listeners;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.hopto.seed419.Notify;
 import org.hopto.seed419.Permissions;
@@ -21,6 +18,8 @@ import org.hopto.seed419.Tools;
  */
 public class CombatListener implements Listener {
 
+    //TODO Armor listener  dura/maxdura * 100 = percent dura left
+
     @EventHandler
     public void onPlayerSwordSwing(EntityDamageByEntityEvent event) {
 
@@ -34,7 +33,6 @@ public class CombatListener implements Listener {
 
             ItemStack item = player.getItemInHand();
             int usesLeft = Tools.getUsesLeft(item);
-            System.out.println("Combat: " + usesLeft);
 
             if (Tools.isSword(item)) {
                 Notify.getProperToolMessage(player, item, usesLeft);

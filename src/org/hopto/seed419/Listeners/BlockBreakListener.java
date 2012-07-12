@@ -1,13 +1,11 @@
 package org.hopto.seed419.Listeners;
 
-import org.bukkit.ChatColor;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.hopto.seed419.Notify;
 import org.hopto.seed419.Permissions;
@@ -33,12 +31,51 @@ public class BlockBreakListener implements Listener {
 
         ItemStack item = event.getPlayer().getItemInHand();
         int usesLeft = Tools.getUsesLeft(item);
-        System.out.println("Block Break: " + usesLeft);
 
         if (Tools.isPickaxe(item)) {
-            Notify.getProperToolMessage(player, item, usesLeft);
-        } else {
-            Notify.getImproperToolMessage(player, item, usesLeft);
+            if (isPickaxeBlock(event.getBlock()))  {
+                Notify.getProperToolMessage(player, item, usesLeft);
+            } else {
+                Notify.getImproperToolMessage(player, item, usesLeft);
+            }
+        } else if (Tools.isShovel(item)) {
+            if (isShovelBlock(event.getBlock())) {
+                Notify.getProperToolMessage(player, item, usesLeft);
+            } else {
+                Notify.getImproperToolMessage(player, item, usesLeft);
+            }
         }
     }
+
+    private boolean isPickaxeBlock(Block block) {
+        switch (block.getType()) {
+            case STONE:
+            case COBBLESTONE:
+            case COBBLESTONE_STAIRS:
+            case COAL_ORE:
+            case IRON_ORE:
+            case DIAMOND_ORE:
+            case GOLD_ORE:
+            case LAPIS_ORE:
+            case REDSTONE_ORE:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private boolean isShovelBlock(Block block) {
+        switch (block.getType()) {
+            case SNOW:
+            case DIRT:
+            case GRAVEL:
+            case SNOW_BLOCK:
+            case SAND:
+                return true;
+            default:
+                return false;
+        }
+
+    }
+
 }
