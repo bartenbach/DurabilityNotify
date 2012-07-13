@@ -4,6 +4,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.text.DecimalFormat;
+
 /**
  * Created with IntelliJ IDEA.
  * User: seed419
@@ -14,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 public class Notify {
 
     private final static String warning = ChatColor.DARK_RED + "[" + ChatColor.YELLOW + "Warning" + ChatColor.DARK_RED + "]";
+    private final static DecimalFormat df = new DecimalFormat("#.#");
 
     public static void getProperToolMessage(Player player, ItemStack item, int usesLeft) {
         if (Tools.isWoodTool(item)) {
@@ -87,9 +90,21 @@ public class Notify {
         }
     }
 
+    public static void sendArmorWarning(Player player, ItemStack item, double percentLeft, ChatColor color) {
+        if (percentLeft > 0) {
+            player.sendMessage(warning + ChatColor.YELLOW + " Your " +
+                    color + item.getType().name().toLowerCase().replace("_", " ") + ChatColor.YELLOW +
+                    " is at " + ChatColor.GRAY +  df.format(percentLeft) + "% " + ChatColor.YELLOW + " durability");
+        } else {
+            player.sendMessage(warning + ChatColor.YELLOW + " Your " +
+                    color + item.getType().name().toLowerCase().replace("_", " ") + ChatColor.YELLOW +
+                    " has broke!");
+        }
+    }
+
     public static void sendMessage(Player player, ItemStack item, int usesLeft, boolean lastuse, ChatColor color) {
         player.sendMessage(warning + ChatColor.YELLOW + " Your " +
                 color + item.getType().name().toLowerCase().replace("_", " ") + ChatColor.YELLOW +
-                " has only " + ChatColor.GRAY +  usesLeft + ChatColor.YELLOW + (lastuse ? " use" : " uses") + " left!");
+                " has only " + ChatColor.GRAY +  usesLeft + ChatColor.YELLOW + (lastuse ? " use" : " uses") + " left");
     }
 }
