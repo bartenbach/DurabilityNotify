@@ -15,14 +15,14 @@ import java.util.HashMap;
 public class LiveNotify {
 
 
-    private HashMap<Player,Boolean> liveNotifications = new HashMap<Player, Boolean>();
+    private static HashMap<Player,Boolean> liveNotifications = new HashMap<Player, Boolean>();
 
 
     public void nofityOn(Player player) {
         liveNotifications.put(player, true);
     }
 
-    public boolean onMap(Player player) {
+    public static boolean onMap(Player player) {
         return liveNotifications.containsKey(player);
     }
 

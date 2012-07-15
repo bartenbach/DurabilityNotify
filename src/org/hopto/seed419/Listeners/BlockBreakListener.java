@@ -7,6 +7,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.hopto.seed419.LiveNotify;
 import org.hopto.seed419.Notify;
 import org.hopto.seed419.Permissions;
 import org.hopto.seed419.Tools;
@@ -33,13 +34,15 @@ public class BlockBreakListener implements Listener {
         int usesLeft = Tools.getUsesLeft(item);
 
         if (Tools.isPickaxe(item)) {
-            if (isPickaxeBlock(event.getBlock()))  {
-                Notify.getProperToolMessage(player, item, usesLeft);
+            if (LiveNotify.onMap(player)) {
+                Notify.sendLiveNotification(player, item, usesLeft, Tools.getToolColor(item));
             } else {
-                Notify.getImproperToolMessage(player, item, usesLeft);
+                Notify.getProperToolMessage(player, item, usesLeft);
             }
         } else if (Tools.isShovel(item)) {
-            if (isShovelBlock(event.getBlock())) {
+            if (LiveNotify.onMap(player)) {
+                Notify.sendLiveNotification(player, item, usesLeft, Tools.getToolColor(item));
+            } else if (isShovelBlock(event.getBlock())) {
                 Notify.getProperToolMessage(player, item, usesLeft);
             } else {
                 Notify.getImproperToolMessage(player, item, usesLeft);
@@ -47,7 +50,7 @@ public class BlockBreakListener implements Listener {
         }
     }
 
-    private boolean isPickaxeBlock(Block block) {
+/*    private boolean isPickaxeBlock(Block block) {
         switch (block.getType()) {
             case STONE:
             case COBBLESTONE:
@@ -62,7 +65,7 @@ public class BlockBreakListener implements Listener {
             default:
                 return false;
         }
-    }
+    }*/
 
     private boolean isShovelBlock(Block block) {
         switch (block.getType()) {

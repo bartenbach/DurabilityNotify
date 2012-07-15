@@ -1,5 +1,6 @@
 package org.hopto.seed419;
 
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -129,6 +130,32 @@ public class Tools {
                 return true;
             default:
                 return false;
+        }
+    }
+
+    public static ChatColor getToolColor(ItemStack is) {
+        switch (is.getType()) {
+            case DIAMOND_SWORD:
+            case DIAMOND_SPADE:
+            case DIAMOND_PICKAXE:
+            case DIAMOND_AXE:
+            case DIAMOND_HOE:
+                return ChatColor.AQUA;
+            case GOLD_HOE:
+            case GOLD_AXE:
+            case GOLD_SPADE:
+            case GOLD_SWORD:
+            case GOLD_PICKAXE:
+                return ChatColor.GOLD;
+            case IRON_AXE:
+            case IRON_PICKAXE:
+            case IRON_HOE:
+            case IRON_SPADE:
+            case IRON_SWORD:
+            case SHEARS:
+                return ChatColor.GRAY;
+            default:
+                return null;
         }
     }
 

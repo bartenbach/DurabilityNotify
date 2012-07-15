@@ -6,16 +6,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.hopto.seed419.LiveNotify;
 import org.hopto.seed419.Notify;
 import org.hopto.seed419.Tools;
 
-/**
- * Created with IntelliJ IDEA.
- * User: seed419
- * Date: 4/29/12
- * Time: 8:39 PM
- * To change this template use File | Settings | File Templates.
- */
 public class HoeListener implements Listener {
 
     @EventHandler
@@ -31,7 +25,9 @@ public class HoeListener implements Listener {
                             Player player = event.getPlayer();
                             int usesLeft = Tools.getUsesLeft(item);
 
-                            if (usesLeft == 10) {
+                            if (LiveNotify.onMap(player)) {
+                                Notify.sendLiveNotification(player, item, usesLeft, ChatColor.WHITE);
+                            } else if (usesLeft == 10) {
                                 Notify.sendMessage(player, item, usesLeft, false, ChatColor.WHITE);
                             } else if (usesLeft == 1) {
                                 Notify.sendMessage(player, item, usesLeft, true, ChatColor.WHITE);

@@ -27,6 +27,10 @@ public class Armor {
             case IRON_HELMET:
             case IRON_LEGGINGS:
             case IRON_BOOTS:
+            case CHAINMAIL_BOOTS:
+            case CHAINMAIL_HELMET:
+            case CHAINMAIL_LEGGINGS:
+            case CHAINMAIL_CHESTPLATE:
                 return ChatColor.GRAY;
             case GOLD_BOOTS:
             case GOLD_HELMET:

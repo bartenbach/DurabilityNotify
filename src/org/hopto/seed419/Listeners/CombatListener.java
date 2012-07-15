@@ -1,5 +1,6 @@
 package org.hopto.seed419.Listeners;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -7,10 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
-import org.hopto.seed419.Armor;
-import org.hopto.seed419.Notify;
-import org.hopto.seed419.Permissions;
-import org.hopto.seed419.Tools;
+import org.hopto.seed419.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,14 +28,15 @@ public class CombatListener implements Listener {
 
             Player player = (Player) event.getDamager();
 
-            if (!Permissions.hasPerms(player)) {
+            if (!Permissions.hasPerms(player) || player.getItemInHand().getType() == Material.AIR) {
                 return;
             }
 
             ItemStack item = player.getItemInHand();
             int usesLeft = Tools.getUsesLeft(item);
-
-            if (Tools.isSword(item)) {
+            if (LiveNotify.onMap(player)) {
+                Notify.sendLiveNotification(player, item, usesLeft, Tools.getToolColor(item));
+            } else if (Tools.isSword(item)) {
                 Notify.getProperToolMessage(player, item, usesLeft);
             } else {
                 Notify.getImproperToolMessage(player, item, usesLeft);
@@ -70,7 +69,7 @@ public class CombatListener implements Listener {
 
     private void checkDurability(Player player, ItemStack is) {
         double percentLeft = (100.00 - Armor.getPercentDurabilityLeft(is));
-        if (percentLeft >= 90.0 && percentLeft <= 91.0 || percentLeft >= 95.0 && percentLeft <=96.0) {
+        if (percentLeft >= 10.0 && percentLeft <= 11.0 || percentLeft >= 5.0 && percentLeft <=6.0 || percentLeft == 0.0) {
             Notify.sendArmorWarning(player, is, percentLeft, Armor.getArmorColor(is));
         }
     }
