@@ -133,6 +133,19 @@ public class Tools {
         }
     }
 
+    public static boolean isAxe(ItemStack is) {
+        switch (is.getType()) {
+            case WOOD_AXE:
+            case STONE_AXE:
+            case IRON_AXE:
+            case GOLD_AXE:
+            case DIAMOND_AXE:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     public static ChatColor getToolColor(ItemStack is) {
         switch (is.getType()) {
             case DIAMOND_SWORD:
@@ -153,9 +166,14 @@ public class Tools {
             case IRON_SPADE:
             case IRON_SWORD:
             case SHEARS:
+            case STONE_AXE:
+            case STONE_HOE:
+            case STONE_SWORD:
+            case STONE_SPADE:
+            case STONE_PICKAXE:
                 return ChatColor.GRAY;
             default:
-                return null;
+                return ChatColor.WHITE;
         }
     }
 

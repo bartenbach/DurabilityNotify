@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.inventory.ItemStack;
 import org.hopto.seed419.Notify;
 import org.hopto.seed419.Permissions;
 import org.hopto.seed419.Tools;
@@ -22,28 +21,20 @@ public class FishingListener implements Listener {
 
     @EventHandler
     public void onPlayerFish(PlayerFishEvent event) {
-
         Player player = event.getPlayer();
-
-        if (!Permissions.hasPerms(player)) {
+        if (!Permissions.hasToolPerms(player)) {
             return;
         }
-
         switch (event.getState()) {
             case CAUGHT_ENTITY:
             case CAUGHT_FISH:
             case IN_GROUND:
-
-                ItemStack item = event.getPlayer().getItemInHand();
-                int usesLeft = Tools.getUsesLeft(item);
-
-                if (usesLeft == 10) {
-                    Notify.sendMessage(player, item, usesLeft, false, ChatColor.WHITE);
-                } else if (usesLeft == 1) {
-                    Notify.sendMessage(player, item, usesLeft, true, ChatColor.WHITE);
+                int usesLeft = Tools.getUsesLeft(event.getPlayer().getItemInHand());
+                if (usesLeft == 10 || usesLeft == 1) {
+                    Notify.sendMessage(player, event.getPlayer().getItemInHand(), usesLeft, ChatColor.WHITE);
                 }
-
+            default:
+                break;
         }
-
     }
 }

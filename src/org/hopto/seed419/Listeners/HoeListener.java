@@ -21,19 +21,17 @@ public class HoeListener implements Listener {
                     switch (event.getClickedBlock().getType()) {
                         case DIRT:
                         case GRASS:
-
                             Player player = event.getPlayer();
                             int usesLeft = Tools.getUsesLeft(item);
 
                             if (LiveNotify.onMap(player)) {
-                                Notify.sendLiveNotification(player, item, usesLeft, ChatColor.WHITE);
-                            } else if (usesLeft == 10) {
-                                Notify.sendMessage(player, item, usesLeft, false, ChatColor.WHITE);
-                            } else if (usesLeft == 1) {
-                                Notify.sendMessage(player, item, usesLeft, true, ChatColor.WHITE);
+                                if (LiveNotify.nofityOn(player)) {
+                                    Notify.sendLiveNotification(player, item, usesLeft, ChatColor.WHITE);
+                                }
+                            } else if (usesLeft == 10 || usesLeft == 1) {
+                                Notify.sendMessage(player, item, usesLeft, ChatColor.WHITE);
                             }
                             break;
-
                         default:
                             break;
                     }

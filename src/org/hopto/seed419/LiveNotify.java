@@ -18,7 +18,11 @@ public class LiveNotify {
     private static HashMap<Player,Boolean> liveNotifications = new HashMap<Player, Boolean>();
 
 
-    public void nofityOn(Player player) {
+    public static boolean nofityOn(Player player) {
+        return liveNotifications.get(player);
+    }
+
+    public static void putPlayerOnMap(Player player) {
         liveNotifications.put(player, true);
     }
 

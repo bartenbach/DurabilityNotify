@@ -1,0 +1,7 @@
+DurabilityNotify Configuration:
+  Main:
+    Give OPs all permissions: true
+  Armor:
+    Notify at 10% Armor: false;
+    Notify at 5% Armor: true;
+    Notify on armor break: true;

@@ -5,6 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.hopto.seed419.File.FileHandler;
 import org.hopto.seed419.Listeners.*;
 
 /*  Attribute Only (Public) License
@@ -31,18 +32,29 @@ import org.hopto.seed419.Listeners.*;
 
 @license AOL v.a3 <http://aol.nexua.org>*/
 
-public class DurabilityReminder extends JavaPlugin {
+public class DurabilityNotify extends JavaPlugin {
 
     private final static BlockBreakListener pl = new BlockBreakListener();
     private final static BowListener bl = new BowListener();
     private final static FishingListener fl = new FishingListener();
     private final static HoeListener hl = new HoeListener();
-    private final static CombatListener scl = new CombatListener();
     private final static LiveNotify ln = new LiveNotify();
+    private static CombatListener scl;
+    private static Permissions perm;
+    private static FileHandler fh;
     PluginManager pm;
 
     @Override
     public void onEnable() {
+        /*Handle configuration file*/
+        fh = new FileHandler(this);
+        fh.checkFiles();
+
+        /*Pass Instance variables to classes*/
+        perm = new Permissions(this);
+        scl = new CombatListener(this);
+
+        /*Register events*/
         pm = getServer().getPluginManager();
         pm.registerEvents(pl, this);
         pm.registerEvents(bl, this);
@@ -53,11 +65,11 @@ public class DurabilityReminder extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player && Permissions.hasPerms((Player)sender) && label.equalsIgnoreCase("dura")) {
+        if (sender instanceof Player && Permissions.hasToolPerms((Player) sender) && label.equalsIgnoreCase("dura")) {
             if (ln.onMap((Player)sender)) {
                 ln.toggleNotify((Player)sender);
             } else {
-                ln.nofityOn((Player)sender);
+                LiveNotify.putPlayerOnMap((Player)sender);
             }
             ln.sendMessage((Player)sender);
             return true;

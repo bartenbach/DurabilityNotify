@@ -1,9 +1,9 @@
 package org.hopto.seed419.Listeners;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
@@ -21,33 +21,28 @@ import org.hopto.seed419.Tools;
  */
 public class BlockBreakListener implements Listener {
 
-    @EventHandler (priority = EventPriority.MONITOR)
+    @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
 
         Player player = event.getPlayer();
 
-        if (!Permissions.hasPerms(player)) {
+        if (!Permissions.hasToolPerms(player) || event.getPlayer().getItemInHand().getType() == Material.AIR) {
             return;
         }
+        System.out.println("You have permission.");
 
         ItemStack item = event.getPlayer().getItemInHand();
         int usesLeft = Tools.getUsesLeft(item);
 
-        if (Tools.isPickaxe(item)) {
-            if (LiveNotify.onMap(player)) {
+        // Live notifications
+        if (LiveNotify.onMap(player)) {
+            if (LiveNotify.nofityOn(player)) {
                 Notify.sendLiveNotification(player, item, usesLeft, Tools.getToolColor(item));
-            } else {
-                Notify.getProperToolMessage(player, item, usesLeft);
-            }
-        } else if (Tools.isShovel(item)) {
-            if (LiveNotify.onMap(player)) {
-                Notify.sendLiveNotification(player, item, usesLeft, Tools.getToolColor(item));
-            } else if (isShovelBlock(event.getBlock())) {
-                Notify.getProperToolMessage(player, item, usesLeft);
-            } else {
-                Notify.getImproperToolMessage(player, item, usesLeft);
             }
         }
+
+        // It seems like every block is the proper tool for anything -.-
+        Notify.getProperToolMessage(player, item, usesLeft);
     }
 
 /*    private boolean isPickaxeBlock(Block block) {
