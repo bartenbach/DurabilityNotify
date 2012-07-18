@@ -1,21 +1,15 @@
 package org.hopto.seed419.Listeners;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.inventory.ItemStack;
+import org.hopto.seed419.LiveNotify;
 import org.hopto.seed419.Notify;
 import org.hopto.seed419.Permissions;
 import org.hopto.seed419.Tools;
 
-/**
- * Created with IntelliJ IDEA.
- * User: seed419
- * Date: 4/28/12
- * Time: 1:29 PM
- * To change this template use File | Settings | File Templates.
- */
 public class FishingListener implements Listener {
 
 
@@ -30,8 +24,11 @@ public class FishingListener implements Listener {
             case CAUGHT_FISH:
             case IN_GROUND:
                 int usesLeft = Tools.getUsesLeft(event.getPlayer().getItemInHand());
-                if (usesLeft == 10 || usesLeft == 1) {
-                    Notify.sendMessage(player, event.getPlayer().getItemInHand(), usesLeft, ChatColor.WHITE);
+                ItemStack item = event.getPlayer().getItemInHand();
+                if (LiveNotify.onMap(player) && LiveNotify.nofityOn(player)) {
+                    Notify.sendLiveNotification(player, item, usesLeft, Tools.getToolColor(item));
+                } else if (usesLeft == 10 || usesLeft == 1) {
+                    Notify.sendMessage(player, event.getPlayer().getItemInHand(), usesLeft, Tools.getToolColor(item));
                 }
             default:
                 break;

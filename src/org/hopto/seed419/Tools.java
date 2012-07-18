@@ -3,13 +3,6 @@ package org.hopto.seed419;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
-/**
- * Created with IntelliJ IDEA.
- * User: seed419
- * Date: 4/28/12
- * Time: 1:16 AM
- * To change this template use File | Settings | File Templates.
- */
 public class Tools {
 
     public static int getUsesLeft(ItemStack item) {

@@ -11,13 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.hopto.seed419.*;
 import org.hopto.seed419.File.Paths;
 
-/**
- * Created with IntelliJ IDEA.
- * User: seed419
- * Date: 4/30/12
- * Time: 12:35 AM
- * To change this template use File | Settings | File Templates.
- */
 public class CombatListener implements Listener {
 
 
@@ -39,10 +32,8 @@ public class CombatListener implements Listener {
 
             ItemStack item = player.getItemInHand();
             int usesLeft = Tools.getUsesLeft(item);
-            if (LiveNotify.onMap(player)) {
-                if (LiveNotify.nofityOn(player)) {
-                    Notify.sendLiveNotification(player, item, usesLeft, Tools.getToolColor(item));
-                }
+            if (LiveNotify.onMap(player) && LiveNotify.nofityOn(player)) {
+                Notify.sendLiveNotification(player, item, usesLeft, Tools.getToolColor(item));
             } else if (Tools.isSword(item)) {
                 Notify.getProperToolMessage(player, item, usesLeft);
             }
@@ -54,11 +45,9 @@ public class CombatListener implements Listener {
         if (event.getEntity() instanceof Player && event.getDamage() > 0) {
             Player player = (Player) event.getEntity();
 
-            if (!Permissions.hasArmorPerms(player)) {
-                return;
+            if (Permissions.hasArmorPerms(player)) {
+                checkArmor(player);
             }
-
-            checkArmor(player);
         }
     }
 
@@ -79,12 +68,12 @@ public class CombatListener implements Listener {
 
     private void checkDurability(Player player, ItemStack is) {
         double percentLeft = (100.00 - Armor.getPercentDurabilityLeft(is));
-        if (percentLeft >= 10.0 && percentLeft <= 11.0 && dn.getConfig().getBoolean(Paths.notifyAt10)) {
-            Notify.sendArmorWarning(player, is, percentLeft, Armor.getArmorColor(is));
-        } else if (percentLeft >= 5.0 && percentLeft <= 6.0 && dn.getConfig().getBoolean(Paths.notifyAt5)) {
-            Notify.sendArmorWarning(player, is, percentLeft, Armor.getArmorColor(is));
+        if (percentLeft >= 9.5 && percentLeft <= 11.0 && dn.getConfig().getBoolean(Paths.notifyAt10)) {
+            Notify.sendArmorWarning(player, is, 10, Armor.getArmorColor(is));
+        } else if (percentLeft >= 4.5 && percentLeft <= 6.0 && dn.getConfig().getBoolean(Paths.notifyAt5)) {
+            Notify.sendArmorWarning(player, is, 5, Armor.getArmorColor(is));
         } else if (percentLeft == 0 && dn.getConfig().getBoolean(Paths.notifyOnBreak)) {
-            Notify.sendArmorWarning(player, is, percentLeft, Armor.getArmorColor(is));
+            Notify.sendArmorWarning(player, is, 0, Armor.getArmorColor(is));
         }
     }
 }

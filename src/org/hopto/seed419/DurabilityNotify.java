@@ -39,7 +39,8 @@ public class DurabilityNotify extends JavaPlugin {
     private final static FishingListener fl = new FishingListener();
     private final static HoeListener hl = new HoeListener();
     private final static LiveNotify ln = new LiveNotify();
-    private static CombatListener scl;
+    private final Permissions p = new Permissions(this);
+    private final CombatListener scl = new CombatListener(this);
     private static Permissions perm;
     private static FileHandler fh;
     PluginManager pm;
@@ -49,10 +50,6 @@ public class DurabilityNotify extends JavaPlugin {
         /*Handle configuration file*/
         fh = new FileHandler(this);
         fh.checkFiles();
-
-        /*Pass Instance variables to classes*/
-        perm = new Permissions(this);
-        scl = new CombatListener(this);
 
         /*Register events*/
         pm = getServer().getPluginManager();

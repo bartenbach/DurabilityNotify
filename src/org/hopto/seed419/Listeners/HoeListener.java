@@ -1,6 +1,5 @@
 package org.hopto.seed419.Listeners;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,12 +23,10 @@ public class HoeListener implements Listener {
                             Player player = event.getPlayer();
                             int usesLeft = Tools.getUsesLeft(item);
 
-                            if (LiveNotify.onMap(player)) {
-                                if (LiveNotify.nofityOn(player)) {
-                                    Notify.sendLiveNotification(player, item, usesLeft, ChatColor.WHITE);
-                                }
+                            if (LiveNotify.onMap(player) && LiveNotify.nofityOn(player)) {
+                                Notify.sendLiveNotification(player, item, usesLeft, Tools.getToolColor(item));
                             } else if (usesLeft == 10 || usesLeft == 1) {
-                                Notify.sendMessage(player, item, usesLeft, ChatColor.WHITE);
+                                Notify.sendMessage(player, item, usesLeft, Tools.getToolColor(item));
                             }
                             break;
                         default:

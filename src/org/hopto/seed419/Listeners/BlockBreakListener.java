@@ -1,6 +1,5 @@
 package org.hopto.seed419.Listeners;
 
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,13 +11,6 @@ import org.hopto.seed419.Notify;
 import org.hopto.seed419.Permissions;
 import org.hopto.seed419.Tools;
 
-/**
- * Created with IntelliJ IDEA.
- * User: seed419
- * Date: 4/28/12
- * Time: 1:05 AM
- * To change this template use File | Settings | File Templates.
- */
 public class BlockBreakListener implements Listener {
 
     @EventHandler
@@ -26,25 +18,28 @@ public class BlockBreakListener implements Listener {
 
         Player player = event.getPlayer();
 
-        if (!Permissions.hasToolPerms(player) || event.getPlayer().getItemInHand().getType() == Material.AIR) {
+        if (!Permissions.hasToolPerms(player)) {
             return;
         }
-        System.out.println("You have permission.");
 
         ItemStack item = event.getPlayer().getItemInHand();
+
+        if (!Tools.isPickaxe(item) && !Tools.isAxe(item) && !Tools.isShovel(item) && !Tools.isSword(item)) {
+            return;
+        }
+
         int usesLeft = Tools.getUsesLeft(item);
 
         // Live notifications
-        if (LiveNotify.onMap(player)) {
-            if (LiveNotify.nofityOn(player)) {
-                Notify.sendLiveNotification(player, item, usesLeft, Tools.getToolColor(item));
-            }
-        }
-
+        if (LiveNotify.onMap(player) && LiveNotify.nofityOn(player)) {
+            Notify.sendLiveNotification(player, item, usesLeft, Tools.getToolColor(item));
+        } else {
         // It seems like every block is the proper tool for anything -.-
-        Notify.getProperToolMessage(player, item, usesLeft);
+            Notify.getProperToolMessage(player, item, usesLeft);
+        }
     }
 
+    //This is really confusing.  Durability doesn't seem to matter based on blocks.
 /*    private boolean isPickaxeBlock(Block block) {
         switch (block.getType()) {
             case STONE:

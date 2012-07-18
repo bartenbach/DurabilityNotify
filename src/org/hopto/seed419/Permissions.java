@@ -3,13 +3,6 @@ package org.hopto.seed419;
 import org.bukkit.entity.Player;
 import org.hopto.seed419.File.Paths;
 
-/**
- * Created with IntelliJ IDEA.
- * User: seed419
- * Date: 4/29/12
- * Time: 6:57 PM
- * To change this template use File | Settings | File Templates.
- */
 public class Permissions {
 
 

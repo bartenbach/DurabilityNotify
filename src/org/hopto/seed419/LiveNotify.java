@@ -5,13 +5,6 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
-/**
- * Created with IntelliJ IDEA.
- * User: seed419
- * Date: 7/13/12
- * Time: 8:08 AM
- * To change this template use File | Settings | File Templates.
- */
 public class LiveNotify {
 
 

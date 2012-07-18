@@ -6,13 +6,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.text.DecimalFormat;
 
-/**
- * Created with IntelliJ IDEA.
- * User: seed419
- * Date: 4/28/12
- * Time: 12:43 PM
- * To change this template use File | Settings | File Templates.
- */
 public class Notify {
 
 
@@ -36,7 +29,7 @@ public class Notify {
         }
     }
 
-    public static void sendArmorWarning(Player player, ItemStack item, double percentLeft, ChatColor color) {
+    public static void sendArmorWarning(Player player, ItemStack item, int percentLeft, ChatColor color) {
         String message;
         if (percentLeft > 0) {
             message = warning + ChatColor.YELLOW + " Your " + color + item.getType().name().toLowerCase().replace("_", " ")

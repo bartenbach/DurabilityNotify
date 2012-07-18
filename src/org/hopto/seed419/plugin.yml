@@ -1,7 +1,7 @@
 name: DurabilityNotify
 main: org.hopto.seed419.DurabilityNotify
 author: seed419
-version: 0.0.8
+version: 0.1
 description: Reminds players when their tools are at low durability
 
 commands:
