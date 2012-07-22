@@ -1,6 +1,6 @@
 package org.hopto.seed419.Listeners;
 
-import org.bukkit.block.Block;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,7 +14,7 @@ import org.hopto.seed419.Tools;
 public class BlockBreakListener implements Listener {
 
     @EventHandler
-    public void onBlockBreak(BlockBreakEvent event) {
+    void onBlockBreak(BlockBreakEvent event) {
 
         Player player = event.getPlayer();
 
@@ -24,51 +24,15 @@ public class BlockBreakListener implements Listener {
 
         ItemStack item = event.getPlayer().getItemInHand();
 
-        if (!Tools.isPickaxe(item) && !Tools.isAxe(item) && !Tools.isShovel(item) && !Tools.isSword(item)) {
+        if (!Tools.isPickaxe(item) && !Tools.isAxe(item) && !Tools.isShovel(item) && !Tools.isSword(item) ||
+                item.getType() == Material.SHEARS) {
             return;
         }
 
         int usesLeft = Tools.getUsesLeft(item);
 
-        // Live notifications
-        if (LiveNotify.onMap(player) && LiveNotify.nofityOn(player)) {
-            Notify.sendLiveNotification(player, item, usesLeft, Tools.getToolColor(item));
-        } else {
-        // It seems like every block is the proper tool for anything -.-
+        if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
             Notify.getProperToolMessage(player, item, usesLeft);
         }
     }
-
-    //This is really confusing.  Durability doesn't seem to matter based on blocks.
-/*    private boolean isPickaxeBlock(Block block) {
-        switch (block.getType()) {
-            case STONE:
-            case COBBLESTONE:
-            case COBBLESTONE_STAIRS:
-            case COAL_ORE:
-            case IRON_ORE:
-            case DIAMOND_ORE:
-            case GOLD_ORE:
-            case LAPIS_ORE:
-            case REDSTONE_ORE:
-                return true;
-            default:
-                return false;
-        }
-    }*/
-
-    private boolean isShovelBlock(Block block) {
-        switch (block.getType()) {
-            case SNOW:
-            case DIRT:
-            case GRAVEL:
-            case SNOW_BLOCK:
-            case SAND:
-                return true;
-            default:
-                return false;
-        }
-
-    }
-
 }

@@ -22,7 +22,7 @@ public class CombatListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-    public void onPlayerInflictDamage(EntityDamageByEntityEvent event) {
+    void onPlayerInflictDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
             Player player = (Player) event.getDamager();
 
@@ -32,22 +32,29 @@ public class CombatListener implements Listener {
 
             ItemStack item = player.getItemInHand();
             int usesLeft = Tools.getUsesLeft(item);
-            if (LiveNotify.onMap(player) && LiveNotify.nofityOn(player)) {
-                Notify.sendLiveNotification(player, item, usesLeft, Tools.getToolColor(item));
-            } else if (Tools.isSword(item)) {
-                Notify.getProperToolMessage(player, item, usesLeft);
+
+            if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
+                if (Tools.isSword(item)) {
+                    Notify.getProperToolMessage(player, item, usesLeft);
+                } else if (Tools.isAxe(item)) {
+                    Notify.getImproperToolMessage(player, item, usesLeft);
+                }
             }
         }
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-    public void onPlayerTakeDamage(EntityDamageEvent event) {
+    void onPlayerTakeDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player && event.getDamage() > 0) {
+
             Player player = (Player) event.getEntity();
 
-            if (Permissions.hasArmorPerms(player)) {
-                checkArmor(player);
+            if (!Permissions.hasArmorPerms(player)) {
+                return;
             }
+
+            //TODO Live armor notifications?
+            checkArmor(player);
         }
     }
 
@@ -69,11 +76,11 @@ public class CombatListener implements Listener {
     private void checkDurability(Player player, ItemStack is) {
         double percentLeft = (100.00 - Armor.getPercentDurabilityLeft(is));
         if (percentLeft >= 9.5 && percentLeft <= 11.0 && dn.getConfig().getBoolean(Paths.notifyAt10)) {
-            Notify.sendArmorWarning(player, is, 10, Armor.getArmorColor(is));
+            Notify.sendArmorWarning(player, is, 10);
         } else if (percentLeft >= 4.5 && percentLeft <= 6.0 && dn.getConfig().getBoolean(Paths.notifyAt5)) {
-            Notify.sendArmorWarning(player, is, 5, Armor.getArmorColor(is));
+            Notify.sendArmorWarning(player, is, 5);
         } else if (percentLeft == 0 && dn.getConfig().getBoolean(Paths.notifyOnBreak)) {
-            Notify.sendArmorWarning(player, is, 0, Armor.getArmorColor(is));
+            Notify.sendArmorWarning(player, is, 0);
         }
     }
 }

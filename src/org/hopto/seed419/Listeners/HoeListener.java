@@ -12,7 +12,7 @@ import org.hopto.seed419.Tools;
 public class HoeListener implements Listener {
 
     @EventHandler
-    public void onPlayerHoeSoil(PlayerInteractEvent event) {
+    void onPlayerHoeSoil(PlayerInteractEvent event) {
         ItemStack item = event.getPlayer().getItemInHand();
         if (Tools.isHoe(item)) {
             switch(event.getAction()) {
@@ -23,10 +23,8 @@ public class HoeListener implements Listener {
                             Player player = event.getPlayer();
                             int usesLeft = Tools.getUsesLeft(item);
 
-                            if (LiveNotify.onMap(player) && LiveNotify.nofityOn(player)) {
-                                Notify.sendLiveNotification(player, item, usesLeft, Tools.getToolColor(item));
-                            } else if (usesLeft == 10 || usesLeft == 1) {
-                                Notify.sendMessage(player, item, usesLeft, Tools.getToolColor(item));
+                            if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
+                                Notify.getProperToolMessage(player, item, usesLeft);
                             }
                             break;
                         default:

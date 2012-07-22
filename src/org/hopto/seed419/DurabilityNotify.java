@@ -41,23 +41,25 @@ public class DurabilityNotify extends JavaPlugin {
     private final static LiveNotify ln = new LiveNotify();
     private final Permissions p = new Permissions(this);
     private final CombatListener scl = new CombatListener(this);
+    private final FlintAndSteelListener fasl = new FlintAndSteelListener();
+    private final ShearListener sl = new ShearListener();
     private static Permissions perm;
     private static FileHandler fh;
     PluginManager pm;
 
     @Override
     public void onEnable() {
-        /*Handle configuration file*/
         fh = new FileHandler(this);
         fh.checkFiles();
 
-        /*Register events*/
         pm = getServer().getPluginManager();
         pm.registerEvents(pl, this);
         pm.registerEvents(bl, this);
         pm.registerEvents(fl, this);
         pm.registerEvents(hl, this);
         pm.registerEvents(scl, this);
+        pm.registerEvents(fasl, this);
+        pm.registerEvents(sl, this);
     }
 
     @Override

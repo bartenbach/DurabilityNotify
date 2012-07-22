@@ -14,21 +14,26 @@ public class FishingListener implements Listener {
 
 
     @EventHandler
-    public void onPlayerFish(PlayerFishEvent event) {
+    void onPlayerFish(PlayerFishEvent event) {
+
         Player player = event.getPlayer();
+
         if (!Permissions.hasToolPerms(player)) {
             return;
         }
+
+        int usesLeft = Tools.getUsesLeft(event.getPlayer().getItemInHand());
+        ItemStack item = event.getPlayer().getItemInHand();
+
         switch (event.getState()) {
-            case CAUGHT_ENTITY:
             case CAUGHT_FISH:
+                if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
+                    Notify.getProperToolMessage(player, item, usesLeft);
+                }
             case IN_GROUND:
-                int usesLeft = Tools.getUsesLeft(event.getPlayer().getItemInHand());
-                ItemStack item = event.getPlayer().getItemInHand();
-                if (LiveNotify.onMap(player) && LiveNotify.nofityOn(player)) {
-                    Notify.sendLiveNotification(player, item, usesLeft, Tools.getToolColor(item));
-                } else if (usesLeft == 10 || usesLeft == 1) {
-                    Notify.sendMessage(player, event.getPlayer().getItemInHand(), usesLeft, Tools.getToolColor(item));
+            case CAUGHT_ENTITY:
+                if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
+                    Notify.getImproperToolMessage(player, item, usesLeft);
                 }
             default:
                 break;

@@ -56,6 +56,17 @@ public class Tools {
             case IRON_SPADE:
             case IRON_SWORD:
             case SHEARS:
+            case FLINT_AND_STEEL:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isStringTool(ItemStack is) {
+        switch (is.getType()) {
+            case FISHING_ROD:
+            case BOW:
                 return true;
             default:
                 return false;
@@ -164,6 +175,7 @@ public class Tools {
             case STONE_SWORD:
             case STONE_SPADE:
             case STONE_PICKAXE:
+            case FLINT_AND_STEEL:
                 return ChatColor.GRAY;
             default:
                 return ChatColor.WHITE;
