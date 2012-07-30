@@ -30,12 +30,23 @@ public class Notify {
     }
 
     public static void getImproperToolMessage(Player player, ItemStack item, int usesLeft) {
-        if (Tools.isWoodTool(item) || Tools.isStoneTool(item) || Tools.isGoldTool(item) || Tools.isIronTool(item)) {
+        if (Tools.isWoodTool(item) || Tools.isStoneTool(item) || Tools.isGoldTool(item) || Tools.isIronTool(item)
+                || Tools.isStringTool(item)) {
             if (usesLeft == 10 || usesLeft == 11 || usesLeft == 2 || usesLeft == 1) {
                 Notify.sendMessage(player, item, usesLeft);
             }
         } else if (Tools.isDiamondTool(item)) {
-            if (usesLeft == 500 || usesLeft == 200 || usesLeft == 50 || usesLeft == 1) {
+            if (usesLeft == 500 || usesLeft == 501 || usesLeft == 201 || usesLeft == 200 || usesLeft == 51 ||
+                    usesLeft == 50 || usesLeft == 2 || usesLeft == 1) {
+                Notify.sendMessage(player, item, usesLeft);
+            }
+        }
+    }
+
+    //Only known use for this is fishing rods being cast into mobs.  It deals 3 durability damage
+    public static void getReallyImproperToolMessage(Player player, ItemStack item, int usesLeft) {
+        if (Tools.isStringTool(item)) {
+            if (usesLeft == 11 || usesLeft == 10 || usesLeft == 9 || usesLeft == 3 || usesLeft == 2 || usesLeft == 1) {
                 Notify.sendMessage(player, item, usesLeft);
             }
         }

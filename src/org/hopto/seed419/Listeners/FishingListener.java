@@ -30,11 +30,17 @@ public class FishingListener implements Listener {
                 if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
                     Notify.getProperToolMessage(player, item, usesLeft);
                 }
+                break;
             case IN_GROUND:
-            case CAUGHT_ENTITY:
                 if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
                     Notify.getImproperToolMessage(player, item, usesLeft);
                 }
+                break;
+            case CAUGHT_ENTITY:
+                if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
+                    Notify.getReallyImproperToolMessage(player, item ,usesLeft);
+                }
+                break;
             default:
                 break;
         }

@@ -53,6 +53,18 @@ public class CombatListener implements Listener {
                 return;
             }
 
+            switch (event.getCause()) {
+                case DROWNING:
+                case POISON:
+                case STARVATION:
+                case VOID:
+                case FALL:
+                case FIRE_TICK:
+                case SUFFOCATION:
+                case MAGIC:
+                    return;
+            }
+
             //TODO Live armor notifications?
             checkArmor(player);
         }
@@ -75,9 +87,9 @@ public class CombatListener implements Listener {
 
     private void checkDurability(Player player, ItemStack is) {
         double percentLeft = (100.00 - Armor.getPercentDurabilityLeft(is));
-        if (percentLeft >= 9.5 && percentLeft <= 11.0 && dn.getConfig().getBoolean(Paths.notifyAt10)) {
+        if (percentLeft >= 9.0 && percentLeft <= 11.0 && dn.getConfig().getBoolean(Paths.notifyAt10)) {
             Notify.sendArmorWarning(player, is, 10);
-        } else if (percentLeft >= 4.5 && percentLeft <= 6.0 && dn.getConfig().getBoolean(Paths.notifyAt5)) {
+        } else if (percentLeft >= 4.0 && percentLeft <= 6.0 && dn.getConfig().getBoolean(Paths.notifyAt5)) {
             Notify.sendArmorWarning(player, is, 5);
         } else if (percentLeft == 0 && dn.getConfig().getBoolean(Paths.notifyOnBreak)) {
             Notify.sendArmorWarning(player, is, 0);

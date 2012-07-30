@@ -43,7 +43,7 @@ public class Armor {
             case LEATHER_LEGGINGS:
                 return ChatColor.RED;
             default:
-                return null;
+                return ChatColor.WHITE;
         }
     }
 

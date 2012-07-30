@@ -47,6 +47,7 @@ public class ShearListener implements Listener {
         }
     }
 
+    @EventHandler
     void onPlayerShearSheep(PlayerShearEntityEvent event) {
 
         Player player = event.getPlayer();

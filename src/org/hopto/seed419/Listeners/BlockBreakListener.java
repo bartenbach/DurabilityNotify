@@ -32,7 +32,11 @@ public class BlockBreakListener implements Listener {
         int usesLeft = Tools.getUsesLeft(item);
 
         if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
-            Notify.getProperToolMessage(player, item, usesLeft);
+            if (Tools.isSword(item)) {
+                Notify.getImproperToolMessage(player, item, usesLeft);
+            } else {
+                Notify.getProperToolMessage(player, item, usesLeft);
+            }
         }
     }
 }
