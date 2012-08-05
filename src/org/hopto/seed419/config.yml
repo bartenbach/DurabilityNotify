@@ -5,3 +5,6 @@ DurabilityNotify Configuration:
     Notify at 10% Armor: false
     Notify at 5% Armor: true
     Notify on armor break: true
+  Timed Reminders:
+    Enabled: false
+    Minutes: 30

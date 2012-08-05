@@ -38,10 +38,14 @@ public class LiveNotify {
 
     public static boolean checkLiveNotify(Player player, ItemStack item, int usesLeft) {
         if (onMap(player) && nofityOn(player)) {
-            Notify.sendLiveNotification(player, item, usesLeft);
+            Notify.createLiveNotification(player, item, usesLeft);
             return true;
         }
         return false;
+    }
+
+    public void clearMap() {
+        liveNotifications = null;
     }
 
 }

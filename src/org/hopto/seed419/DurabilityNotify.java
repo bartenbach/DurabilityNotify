@@ -7,6 +7,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.hopto.seed419.File.FileHandler;
 import org.hopto.seed419.Listeners.*;
+import org.hopto.seed419.Threads.ReminderThread;
 
 /*  Attribute Only (Public) License
         Version 0.a3, July 11, 2011
@@ -34,23 +35,31 @@ import org.hopto.seed419.Listeners.*;
 
 public class DurabilityNotify extends JavaPlugin {
 
-    private final static BlockBreakListener pl = new BlockBreakListener();
-    private final static BowListener bl = new BowListener();
-    private final static FishingListener fl = new FishingListener();
-    private final static HoeListener hl = new HoeListener();
-    private final static LiveNotify ln = new LiveNotify();
+    private final BlockBreakListener pl = new BlockBreakListener();
+    private final BowListener bl = new BowListener();
+    private final FishingListener fl = new FishingListener();
+    private final HoeListener hl = new HoeListener();
+    private final LiveNotify ln = new LiveNotify();
     private final Permissions p = new Permissions(this);
     private final CombatListener scl = new CombatListener(this);
     private final FlintAndSteelListener fasl = new FlintAndSteelListener();
     private final ShearListener sl = new ShearListener();
-    private static Permissions perm;
-    private static FileHandler fh;
+    private Notify n;
+    private FileHandler fh;
+    private ReminderThread rt;
+    private Armor a;
     PluginManager pm;
 
     @Override
     public void onEnable() {
         fh = new FileHandler(this);
         fh.checkFiles();
+
+        rt = new ReminderThread(this);
+        rt.checkEnabled();
+
+        a = new Armor(this);
+        n = new Notify(this);
 
         pm = getServer().getPluginManager();
         pm.registerEvents(pl, this);
@@ -60,6 +69,14 @@ public class DurabilityNotify extends JavaPlugin {
         pm.registerEvents(scl, this);
         pm.registerEvents(fasl, this);
         pm.registerEvents(sl, this);
+
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "SimpleNotice");
+    }
+
+    @Override
+    public void onDisable() {
+        rt.stopThread();
+        ln.clearMap();
     }
 
     @Override

@@ -28,17 +28,17 @@ public class FishingListener implements Listener {
         switch (event.getState()) {
             case CAUGHT_FISH:
                 if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
-                    Notify.getProperToolMessage(player, item, usesLeft);
+                    Notify.checkProperToolForLowDurability(player, item, usesLeft);
                 }
                 break;
             case IN_GROUND:
                 if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
-                    Notify.getImproperToolMessage(player, item, usesLeft);
+                    Notify.checkImproperToolForLowDurability(player, item, usesLeft);
                 }
                 break;
             case CAUGHT_ENTITY:
                 if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
-                    Notify.getReallyImproperToolMessage(player, item ,usesLeft);
+                    Notify.checkReallyImproperToolForLowDurability(player, item, usesLeft);
                 }
                 break;
             default:

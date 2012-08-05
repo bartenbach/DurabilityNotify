@@ -9,7 +9,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.hopto.seed419.*;
-import org.hopto.seed419.File.Paths;
 
 public class CombatListener implements Listener {
 
@@ -35,9 +34,9 @@ public class CombatListener implements Listener {
 
             if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
                 if (Tools.isSword(item)) {
-                    Notify.getProperToolMessage(player, item, usesLeft);
+                    Notify.checkProperToolForLowDurability(player, item, usesLeft);
                 } else if (Tools.isAxe(item)) {
-                    Notify.getImproperToolMessage(player, item, usesLeft);
+                    Notify.checkImproperToolForLowDurability(player, item, usesLeft);
                 }
             }
         }
@@ -66,33 +65,9 @@ public class CombatListener implements Listener {
             }
 
             //TODO Live armor notifications?
-            checkArmor(player);
+            Armor.checkArmor(player);
         }
     }
 
-    private void checkArmor(Player player) {
-        if (player.getInventory().getHelmet() != null) {
-            checkDurability(player, player.getInventory().getHelmet());
-        }
-        if (player.getInventory().getChestplate() != null) {
-            checkDurability(player, player.getInventory().getChestplate());
-        }
-        if (player.getInventory().getLeggings() != null) {
-            checkDurability(player, player.getInventory().getLeggings());
-        }
-        if (player.getInventory().getBoots() != null) {
-            checkDurability(player, player.getInventory().getBoots());
-        }
-    }
 
-    private void checkDurability(Player player, ItemStack is) {
-        double percentLeft = (100.00 - Armor.getPercentDurabilityLeft(is));
-        if (percentLeft >= 9.0 && percentLeft <= 11.0 && dn.getConfig().getBoolean(Paths.notifyAt10)) {
-            Notify.sendArmorWarning(player, is, 10);
-        } else if (percentLeft >= 4.0 && percentLeft <= 6.0 && dn.getConfig().getBoolean(Paths.notifyAt5)) {
-            Notify.sendArmorWarning(player, is, 5);
-        } else if (percentLeft == 0 && dn.getConfig().getBoolean(Paths.notifyOnBreak)) {
-            Notify.sendArmorWarning(player, is, 0);
-        }
-    }
 }

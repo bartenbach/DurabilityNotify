@@ -33,9 +33,9 @@ public class BlockBreakListener implements Listener {
 
         if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
             if (Tools.isSword(item)) {
-                Notify.getImproperToolMessage(player, item, usesLeft);
+                Notify.checkImproperToolForLowDurability(player, item, usesLeft);
             } else {
-                Notify.getProperToolMessage(player, item, usesLeft);
+                Notify.checkProperToolForLowDurability(player, item, usesLeft);
             }
         }
     }

@@ -24,7 +24,7 @@ public class BowListener implements Listener {
             int usesLeft = Tools.getUsesLeft(event.getBow());
 
             if (!LiveNotify.checkLiveNotify(player, event.getBow(), usesLeft)) {
-                Notify.getProperToolMessage(player, event.getBow(), usesLeft);
+                Notify.checkProperToolForLowDurability(player, event.getBow(), usesLeft);
             }
         }
     }

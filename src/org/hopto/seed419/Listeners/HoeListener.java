@@ -24,7 +24,7 @@ public class HoeListener implements Listener {
                             int usesLeft = Tools.getUsesLeft(item);
 
                             if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
-                                Notify.getProperToolMessage(player, item, usesLeft);
+                                Notify.checkProperToolForLowDurability(player, item, usesLeft);
                             }
                             break;
                         default:
