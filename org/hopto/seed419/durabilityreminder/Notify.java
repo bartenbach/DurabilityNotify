@@ -12,6 +12,7 @@ public class Notify {
     private static DurabilityNotify dn;
     private final static String warning = ChatColor.DARK_RED + "[" + ChatColor.YELLOW + "Warning" + ChatColor.DARK_RED + "]";
     private final static String info = ChatColor.WHITE + "[" + ChatColor.GREEN + "Info" + ChatColor.WHITE + "]";
+    private final static String reminder = ChatColor.WHITE + "[" + ChatColor.GREEN + "Reminder" + ChatColor.WHITE + "]";
     private final static DecimalFormat df = new DecimalFormat("#.#");
     private static String lastmessage = "";
     private static Player lastPlayer = null;
@@ -76,14 +77,13 @@ public class Notify {
     public static void createArmorReminder(Player player, ItemStack item, int percentLeft) {
         ChatColor color = Armor.getArmorColor(item);
         if (percentLeft > 0) {
-            String message = ChatColor.YELLOW + " Your " + color + item.getType().name().toLowerCase().replace("_", " ")
+            String message = reminder + ChatColor.YELLOW + " Your " + color + item.getType().name().toLowerCase().replace("_", " ")
                     + ChatColor.YELLOW + getGrammar(item) + " less than " + ChatColor.GRAY +  df.format(percentLeft) + "%"
                     + ChatColor.YELLOW + " durability remaining";
             if (player.getListeningPluginChannels().contains("SimpleNotice")) {
-                System.out.println("sent simple notice");
+                System.out.println("Found simplenotice");
                 player.sendPluginMessage(dn, "SimpleNotice", message.getBytes(java.nio.charset.Charset.forName("UTF-8")));
             } else {
-                System.out.println("sent message");
                 checkAndSendMessage(player, message);
             }
         }

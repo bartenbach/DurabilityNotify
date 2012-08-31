@@ -5,9 +5,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.hopto.seed419.File.FileHandler;
-import org.hopto.seed419.Listeners.*;
-import org.hopto.seed419.Threads.ReminderThread;
+import org.hopto.seed419.file.FileHandler;
+import org.hopto.seed419.listeners.*;
+import org.hopto.seed419.threads.ReminderThread;
 
 /*  Attribute Only (Public) License
         Version 0.a3, July 11, 2011

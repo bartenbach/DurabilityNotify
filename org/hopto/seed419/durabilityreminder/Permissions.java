@@ -1,7 +1,7 @@
 package org.hopto.seed419;
 
 import org.bukkit.entity.Player;
-import org.hopto.seed419.File.Paths;
+import org.hopto.seed419.file.Paths;
 
 public class Permissions {
 

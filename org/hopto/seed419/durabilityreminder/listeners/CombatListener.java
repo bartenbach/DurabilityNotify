@@ -1,4 +1,4 @@
-package org.hopto.seed419.Listeners;
+package org.hopto.seed419.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

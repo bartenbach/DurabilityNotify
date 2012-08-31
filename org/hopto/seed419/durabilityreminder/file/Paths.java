@@ -1,4 +1,4 @@
-package org.hopto.seed419.File;
+package org.hopto.seed419.file;
 
 public class Paths {
     public final static String useOP = "DurabilityNotify Configuration.Main.Give OPs all permissions";

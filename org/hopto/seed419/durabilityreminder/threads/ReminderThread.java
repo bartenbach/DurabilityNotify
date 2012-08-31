@@ -1,9 +1,9 @@
-package org.hopto.seed419.Threads;
+package org.hopto.seed419.threads;
 
 import org.bukkit.entity.Player;
 import org.hopto.seed419.Armor;
 import org.hopto.seed419.DurabilityNotify;
-import org.hopto.seed419.File.Paths;
+import org.hopto.seed419.file.Paths;
 
 /**
  * Attribute Only (Public) License

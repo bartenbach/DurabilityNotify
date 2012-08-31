@@ -3,14 +3,14 @@ package org.hopto.seed419;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.hopto.seed419.File.Paths;
+import org.hopto.seed419.file.Paths;
 
 /**
  * Created with IntelliJ IDEA.
  * User: seed419
  * Date: 7/13/12
  * Time: 1:36 PM
- * To change this template use File | Settings | File Templates.
+ * To change this template use file | Settings | file Templates.
  */
 public class Armor {
 

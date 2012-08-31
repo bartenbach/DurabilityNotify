@@ -1,7 +1,7 @@
 name: DurabilityNotify
 main: org.hopto.seed419.DurabilityNotify
 author: seed419
-version: 0.4
+version: 0.5
 description: Reminds players when their tools and/or armor are at low durability
 
 commands:
