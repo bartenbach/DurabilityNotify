@@ -1,4 +1,4 @@
-package org.hopto.seed419;
+package co.proxa.durabilitynotify;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -8,33 +8,21 @@ import java.text.DecimalFormat;
 
 public class Notify {
 
-
-    private static DurabilityNotify dn;
     private final static String warning = ChatColor.DARK_RED + "[" + ChatColor.YELLOW + "Warning" + ChatColor.DARK_RED + "]";
     private final static String info = ChatColor.WHITE + "[" + ChatColor.GREEN + "Info" + ChatColor.WHITE + "]";
     private final static String reminder = ChatColor.WHITE + "[" + ChatColor.GREEN + "Reminder" + ChatColor.WHITE + "]";
     private final static DecimalFormat df = new DecimalFormat("#.#");
-    private static String lastmessage = "";
+    private static String lastMessage = "";
     private static Player lastPlayer = null;
 
+    // New way attempt
 
-    public Notify(DurabilityNotify dn) {
-        this.dn = dn;
+    public static void sendNotification(Player player, ItemStack item, int usesLeft) {
+        createToolWarning(player, item, usesLeft);
     }
 
-
-    public static void checkProperToolForLowDurability(Player player, ItemStack item, int usesLeft) {
-        if (Tools.isWoodTool(item) || Tools.isStoneTool(item) || Tools.isGoldTool(item) || Tools.isIronTool(item) ||
-                Tools.isStringTool(item)) {
-            if (usesLeft == 10 || usesLeft == 1) {
-                createToolWarning(player, item, usesLeft);
-            }
-        } else if (Tools.isDiamondTool(item)) {
-            if (usesLeft == 500 || usesLeft == 200 || usesLeft == 50 || usesLeft == 1) {
-                createToolWarning(player, item, usesLeft);
-            }
-        }
-    }
+    // TODO: Hmm..this is going to suck to rewrite.  I should probably check to see if I need to create a notification
+    // TODO: in the actual listener classes, instead of passing it here.
 
     public static void checkImproperToolForLowDurability(Player player, ItemStack item, int usesLeft) {
         if (Tools.isWoodTool(item) || Tools.isStoneTool(item) || Tools.isGoldTool(item) || Tools.isIronTool(item)
@@ -80,12 +68,7 @@ public class Notify {
             String message = reminder + ChatColor.YELLOW + " Your " + color + item.getType().name().toLowerCase().replace("_", " ")
                     + ChatColor.YELLOW + getGrammar(item) + " less than " + ChatColor.GRAY +  df.format(percentLeft) + "%"
                     + ChatColor.YELLOW + " durability remaining";
-            if (player.getListeningPluginChannels().contains("SimpleNotice")) {
-                System.out.println("Found simplenotice");
-                player.sendPluginMessage(dn, "SimpleNotice", message.getBytes(java.nio.charset.Charset.forName("UTF-8")));
-            } else {
-                checkAndSendMessage(player, message);
-            }
+            checkAndSendMessage(player, message);
         }
     }
 
@@ -111,9 +94,9 @@ public class Notify {
     }
 
     private static void checkAndSendMessage(Player player, String message) {
-        if ((!message.equals(lastmessage) || message.equals(lastmessage) && player != lastPlayer)) {
+        if ((!message.equals(lastMessage) || message.equals(lastMessage) && player != lastPlayer)) {
             player.sendMessage(message);
-            lastmessage = message;
+            lastMessage = message;
             lastPlayer = player;
         }
     }
@@ -136,5 +119,4 @@ public class Notify {
                 return " has ";
         }
     }
-
 }

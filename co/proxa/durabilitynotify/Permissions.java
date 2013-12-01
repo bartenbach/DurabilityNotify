@@ -1,7 +1,7 @@
-package org.hopto.seed419;
+package co.proxa.durabilitynotify;
 
 import org.bukkit.entity.Player;
-import org.hopto.seed419.file.Paths;
+import co.proxa.durabilitynotify.file.Paths;
 
 public class Permissions {
 

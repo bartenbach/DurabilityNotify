@@ -1,5 +1,6 @@
-package org.hopto.seed419.listeners;
+package co.proxa.durabilitynotify.listeners;
 
+import co.proxa.durabilitynotify.*;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -7,12 +8,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.hopto.seed419.LiveNotify;
-import org.hopto.seed419.Notify;
-import org.hopto.seed419.Permissions;
-import org.hopto.seed419.Tools;
 
 public class FlintAndSteelListener implements Listener {
+
+    private ListManager lm;
+
+    public FlintAndSteelListener(ListManager lm) {
+        this.lm = lm;
+    }
 
     @EventHandler
     void onPlayerUseFlintAndSteel(PlayerInteractEvent event) {
@@ -25,11 +28,12 @@ public class FlintAndSteelListener implements Listener {
             }
 
             ItemStack item = event.getPlayer().getItemInHand();
-
             int usesLeft = Tools.getUsesLeft(item);
 
             if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
-                Notify.checkProperToolForLowDurability(player, item, usesLeft);
+                if (lm.getFlintAndSteel().contains(usesLeft)) {
+                    Notify.sendNotification(player,item,usesLeft);
+                }
             }
         }
     }

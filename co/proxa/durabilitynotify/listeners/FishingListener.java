@@ -1,16 +1,19 @@
-package org.hopto.seed419.listeners;
+package co.proxa.durabilitynotify.listeners;
 
+import co.proxa.durabilitynotify.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
-import org.hopto.seed419.LiveNotify;
-import org.hopto.seed419.Notify;
-import org.hopto.seed419.Permissions;
-import org.hopto.seed419.Tools;
 
 public class FishingListener implements Listener {
+
+    private ListManager lm;
+
+    public FishingListener(ListManager lm) {
+        this.lm = lm;
+    }
 
 
     @EventHandler
@@ -28,7 +31,9 @@ public class FishingListener implements Listener {
         switch (event.getState()) {
             case CAUGHT_FISH:
                 if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
-                    Notify.checkProperToolForLowDurability(player, item, usesLeft);
+                    if (lm.getFishingRod().contains(usesLeft)) {
+                        Notify.sendNotification(player,item,usesLeft);
+                    }
                 }
                 break;
             case IN_GROUND:

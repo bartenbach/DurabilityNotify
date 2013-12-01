@@ -1,4 +1,4 @@
-package org.hopto.seed419;
+package co.proxa.durabilitynotify;
 
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
@@ -67,6 +67,7 @@ public class Tools {
         switch (is.getType()) {
             case FISHING_ROD:
             case BOW:
+            case CARROT_STICK:
                 return true;
             default:
                 return false;
@@ -92,6 +93,7 @@ public class Tools {
             case DIAMOND_HOE:
             case STONE_HOE:
             case IRON_HOE:
+            case GOLD_HOE:
                 return true;
             default:
                 return false;

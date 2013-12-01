@@ -1,4 +1,4 @@
-package org.hopto.seed419;
+package co.proxa.durabilitynotify;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -8,11 +8,9 @@ import java.util.HashMap;
 
 public class LiveNotify {
 
-
     private static HashMap<String,Boolean> liveNotifications = new HashMap<String, Boolean>();
 
-
-    private static boolean nofityOn(Player player) {
+    private static boolean notifyOn(Player player) {
         return liveNotifications.get(player.getName());
     }
 
@@ -37,7 +35,7 @@ public class LiveNotify {
     }
 
     public static boolean checkLiveNotify(Player player, ItemStack item, int usesLeft) {
-        if (onMap(player) && nofityOn(player)) {
+        if (onMap(player) && notifyOn(player)) {
             Notify.createLiveNotification(player, item, usesLeft);
             return true;
         }

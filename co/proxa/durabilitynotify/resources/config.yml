@@ -1,0 +1,68 @@
+DurabilityNotify Configuration:
+  Main:
+    Give OPs all permissions: true
+  Tools:
+    Pickaxe:
+      Wooden: [1, 10]
+      Stone: [1, 10]
+      Iron: [1, 10]
+      Gold: [1, 10]
+      Diamond: [1, 50, 200, 500]
+    Shovel:
+      Wooden: [1, 10]
+      Stone: [1, 10]
+      Iron: [1, 10]
+      Gold: [1, 10]
+      Diamond: [1, 50, 200, 500]
+    Axe:
+      Wooden: [1, 10]
+      Stone: [1, 10]
+      Iron: [1, 10]
+      Gold: [1, 10]
+      Diamond: [1, 50, 200, 500]
+    Sword:
+      Wooden: [1, 10]
+      Stone: [1, 10]
+      Iron: [1, 10]
+      Gold: [1, 10]
+      Diamond: [1, 50, 200, 500]
+    Hoe:
+      Wooden: [1, 10]
+      Stone: [1, 10]
+      Iron: [1, 10]
+      Gold: [1, 10]
+      Diamond: [1, 50, 200, 500]
+    Bow: [1, 10]
+    Fishing Rod: [1, 10]
+    Flint and Steel: [1, 10]
+    Shears: [1, 10]
+    Carrot Stick: [1, 10]
+  Armor:
+    Leather:
+      Helmet: [0, 5]
+      Chestplate: [0, 5]
+      Leggings: [0, 5]
+      Boots: [0, 5]
+    Gold:
+      Helmet: [0, 5]
+      Chestplate: [0, 5]
+      Leggings: [0, 5]
+      Boots: [0, 5]
+    Chainmail:
+      Helmet: [0, 5]
+      Chestplate: [0, 5]
+      Leggings: [0, 5]
+      Boots: [0, 5]
+    Iron:
+      Helmet: [0, 5]
+      Chestplate: [0, 5]
+      Leggings: [0, 5]
+      Boots: [0, 5]
+    Diamond:
+      Helmet: [0, 5]
+      Chestplate: [0, 5]
+      Leggings: [0, 5]
+      Boots: [0, 5]
+  Timed Reminders:
+    Enabled: false
+    Minutes: 30

@@ -1,5 +1,6 @@
-package org.hopto.seed419.listeners;
+package co.proxa.durabilitynotify.listeners;
 
+import co.proxa.durabilitynotify.*;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,12 +9,14 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerShearEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.hopto.seed419.LiveNotify;
-import org.hopto.seed419.Notify;
-import org.hopto.seed419.Permissions;
-import org.hopto.seed419.Tools;
 
 public class ShearListener implements Listener {
+
+    private ListManager lm;
+
+    public ShearListener(ListManager lm) {
+        this.lm = lm;
+    }
 
     @EventHandler
     void onPlayerUseShears(PlayerInteractEvent event) {
@@ -38,7 +41,9 @@ public class ShearListener implements Listener {
                     int usesLeft = Tools.getUsesLeft(item);
 
                     if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
-                        Notify.checkProperToolForLowDurability(player, item, usesLeft);
+                        if (lm.getShears().contains(usesLeft)) {
+                            Notify.sendNotification(player,item,usesLeft);
+                        }
                     }
 
                 default:
@@ -49,7 +54,6 @@ public class ShearListener implements Listener {
 
     @EventHandler
     void onPlayerShearSheep(PlayerShearEntityEvent event) {
-
         Player player = event.getPlayer();
 
         if (!Permissions.hasToolPerms(player)) {
@@ -57,11 +61,12 @@ public class ShearListener implements Listener {
         }
 
         ItemStack item = event.getPlayer().getItemInHand();
-
         int usesLeft = Tools.getUsesLeft(item);
 
         if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
-            Notify.checkProperToolForLowDurability(player, item, usesLeft);
+            if (lm.getShears().contains(usesLeft)) {
+                Notify.sendNotification(player,item,usesLeft);
+            }
         }
     }
 }

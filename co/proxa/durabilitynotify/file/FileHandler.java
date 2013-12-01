@@ -1,17 +1,14 @@
-package org.hopto.seed419.file;
+package co.proxa.durabilitynotify.file;
 
-import org.hopto.seed419.DurabilityNotify;
+import co.proxa.durabilitynotify.DurabilityNotify;
 
 public class FileHandler {
 
-
-    private DurabilityNotify  dn;
-
+    private DurabilityNotify dn;
 
     public FileHandler(DurabilityNotify dn) {
         this.dn = dn;
     }
-
 
     public void checkFiles() {
         if (!dn.getDataFolder().exists()) {
@@ -21,6 +18,3 @@ public class FileHandler {
         dn.saveConfig();
     }
 }
-
-
-

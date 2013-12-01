@@ -1,13 +1,13 @@
 name: DurabilityNotify
-main: org.hopto.seed419.DurabilityNotify
-author: seed419
-version: 0.5
+main: co.proxa.durabilitynotify.DurabilityNotify
+author: proxa
+version: 0.6
 description: Reminds players when their tools and/or armor are at low durability
 
 commands:
    dura:
      description: Toggle live durability notifications
-     permission-message: Sorry, you dont have permission
+     permission-message: Sorry, you don't have permission
 
 permissions:
    dura.tools:
