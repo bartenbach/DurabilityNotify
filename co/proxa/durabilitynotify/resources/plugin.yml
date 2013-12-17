@@ -8,6 +8,12 @@ commands:
    dura:
      description: Toggle live durability notifications
      permission-message: Sorry, you don't have permission
+   armor:
+     description: Shows current armor durability
+     permission-message: Sorry, you don't have permission
+   arm:
+     description: Shorthand version of armor command
+     permission-message: Sorry, you don't have permission
 
 permissions:
    dura.tools:

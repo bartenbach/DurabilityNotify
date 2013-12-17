@@ -27,84 +27,26 @@ public class BlockBreakListener implements Listener {
 
         ItemStack item = event.getPlayer().getItemInHand();
 
-        if (!Tools.isPickaxe(item) && !Tools.isAxe(item) && !Tools.isShovel(item) && !Tools.isSword(item)) {
+        if (!Tool.isPickaxe(item) && !Tool.isAxe(item) && !Tool.isShovel(item) && !Tool.isSword(item)) {
             return;
-        }
+        } //TODO is this check needed?
 
-        int usesLeft = Tools.getUsesLeft(item);
+        int usesLeft = Tool.getUsesLeft(item);
 
         if (!LiveNotify.checkLiveNotify(player, item, usesLeft) && usesLeft > 0) {
 
-            List<Integer> notifyList = null;
+            List<Integer> notifyList = Tool.getToolList(item);
 
-            if (Tools.isSword(item)) {
-                // TODO: fix improper tool notifications
-                Notify.checkImproperToolForLowDurability(player, item, usesLeft);
-            } else {
-                if (Tools.isPickaxe(item)) {
-                    switch (item.getType()) {
-                    case WOOD_PICKAXE:
-                        notifyList = lm.getWoodenPickaxe();
-                        break;
-                    case STONE_PICKAXE:
-                        notifyList = lm.getStonePickaxe();
-                        break;
-                    case IRON_PICKAXE:
-                        notifyList = lm.getIronPickaxe();
-                        break;
-                    case GOLD_PICKAXE:
-                        notifyList = lm.getGoldPickaxe();
-                        break;
-                    case DIAMOND_PICKAXE:
-                        notifyList = lm.getDiamondPickaxe();
-                        break;
-                    default:
-                        break;
-                    }
-                } else if (Tools.isAxe(item)) {
-                    switch (item.getType()) {
-                    case WOOD_AXE:
-                        notifyList = lm.getWoodenAxe();
-                        break;
-                    case STONE_AXE:
-                        notifyList = lm.getStoneAxe();
-                        break;
-                    case IRON_AXE:
-                        notifyList = lm.getIronAxe();
-                        break;
-                    case GOLD_AXE:
-                        notifyList = lm.getGoldAxe();
-                        break;
-                    case DIAMOND_AXE:
-                        notifyList = lm.getDiamondAxe();
-                        break;
-                    default:
-                        break;
-                    }
-                } else if (Tools.isShovel(item)) {
-                    switch (item.getType()) {
-                    case WOOD_SPADE:
-                        notifyList = lm.getWoodenShovel();
-                        break;
-                    case STONE_SPADE:
-                        notifyList = lm.getStoneShovel();
-                        break;
-                    case IRON_SPADE:
-                        notifyList = lm.getIronShovel();
-                        break;
-                    case GOLD_SPADE:
-                        notifyList = lm.getGoldShovel();
-                        break;
-                    case DIAMOND_SPADE:
-                        notifyList = lm.getDiamondShovel();
-                        break;
-                    default:
-                        break;
-                    }
+            assert notifyList != null;
+
+            if (Tool.isSword(item)) {
+                if (notifyList.contains(usesLeft) || notifyList.contains(usesLeft+1)) {
+                    Notify.createToolWarning(player, item, usesLeft);
+                    Notify.sendImproperToolWarning(player);
                 }
-                assert notifyList != null;
-                if (notifyList.contains(usesLeft)) {
-                    Notify.sendNotification(player,item,usesLeft);
+            } else {
+                if (notifyList.contains(usesLeft)) {  //TODO test this
+                    Notify.createToolWarning(player, item, usesLeft);
                 }
             }
         }

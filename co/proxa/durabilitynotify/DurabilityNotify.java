@@ -15,9 +15,19 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * FIXME: Known issues:
+ *   1) Improper tool notifications - they probably don't work at all.
+ *   2) That god damn carrot stick
+ *
+ *   Doing:
+ *   1) watching for helmet break notification.
+ *   2) testing improper notification
  */
+
 package co.proxa.durabilitynotify;
 
+import co.proxa.durabilitynotify.file.Paths;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -30,6 +40,7 @@ import co.proxa.durabilitynotify.threads.ReminderThread;
 public class DurabilityNotify extends JavaPlugin {
 
     private final LiveNotify ln = new LiveNotify();
+    private Armor a;
     private ReminderThread rt;
 
     @Override
@@ -37,7 +48,8 @@ public class DurabilityNotify extends JavaPlugin {
         final FileHandler fh = new FileHandler(this);
         final ListManager lm = new ListManager(this);
         final Permissions p = new Permissions(this);
-        final Armor a = new Armor(lm);
+        final Tool t = new Tool(lm);
+        a = new Armor(lm);
         final BlockBreakListener bbl = new BlockBreakListener(lm);
         final BowListener bl = new BowListener(lm);
         final FishingListener fl = new FishingListener(lm);
@@ -47,11 +59,10 @@ public class DurabilityNotify extends JavaPlugin {
         final ShearListener sl = new ShearListener(lm);
         final PluginManager pm = getServer().getPluginManager();
         final Notify n = new Notify();
-        rt = new ReminderThread(this, a);
 
+        this.checkReminderThread(a);
         fh.checkFiles();
         lm.initializeLists();
-        rt.checkEnabled();  // TODO: print startup message if enabled (test it)
 
         pm.registerEvents(bbl, this);
         pm.registerEvents(bl, this);
@@ -60,6 +71,14 @@ public class DurabilityNotify extends JavaPlugin {
         pm.registerEvents(cl, this);
         pm.registerEvents(fasl, this);
         pm.registerEvents(sl, this);
+    }
+
+    private void checkReminderThread(Armor a) {
+        if (this.getConfig().getBoolean(Paths.reminderEnabled)) {
+            int minutes = this.getConfig().getInt(Paths.reminderMinutes);
+            rt = new ReminderThread(this, a, minutes);
+            rt.startThread();
+        }
     }
 
     @Override
@@ -78,7 +97,11 @@ public class DurabilityNotify extends JavaPlugin {
             }
             ln.sendMessage((Player)sender);
             return true;
+        } else if (sender instanceof Player && Permissions.hasArmorPerms((Player) sender) && label.startsWith("arm")) {
+            a.checkArmorCommand((Player) sender);
+            return true;
         }
         return false;
     }
+
 }

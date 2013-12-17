@@ -28,11 +28,11 @@ public class FlintAndSteelListener implements Listener {
             }
 
             ItemStack item = event.getPlayer().getItemInHand();
-            int usesLeft = Tools.getUsesLeft(item);
+            int usesLeft = Tool.getUsesLeft(item);
 
             if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
                 if (lm.getFlintAndSteel().contains(usesLeft)) {
-                    Notify.sendNotification(player,item,usesLeft);
+                    Notify.createToolWarning(player, item, usesLeft);
                 }
             }
         }

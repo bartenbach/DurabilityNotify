@@ -26,7 +26,7 @@ public class ShearListener implements Listener {
 
             if (!Permissions.hasToolPerms(player)) {
                 return;
-            }
+            }  //TODO This whole class was so not tested
 
             switch (event.getClickedBlock().getType()) {
                 case LEAVES:
@@ -38,11 +38,11 @@ public class ShearListener implements Listener {
 
                     ItemStack item = event.getPlayer().getItemInHand();
 
-                    int usesLeft = Tools.getUsesLeft(item);
+                    int usesLeft = Tool.getUsesLeft(item);
 
                     if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
                         if (lm.getShears().contains(usesLeft)) {
-                            Notify.sendNotification(player,item,usesLeft);
+                            Notify.createToolWarning(player, item, usesLeft);
                         }
                     }
 
@@ -61,11 +61,11 @@ public class ShearListener implements Listener {
         }
 
         ItemStack item = event.getPlayer().getItemInHand();
-        int usesLeft = Tools.getUsesLeft(item);
+        int usesLeft = Tool.getUsesLeft(item);
 
         if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
             if (lm.getShears().contains(usesLeft)) {
-                Notify.sendNotification(player,item,usesLeft);
+                Notify.createToolWarning(player, item, usesLeft);
             }
         }
     }

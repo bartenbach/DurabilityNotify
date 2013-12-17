@@ -21,7 +21,7 @@ public class HoeListener implements Listener {
 
     @EventHandler
     void onPlayerHoeSoil(PlayerInteractEvent event) {
-        if (Tools.isHoe(event.getPlayer().getItemInHand())) {
+        if (Tool.isHoe(event.getPlayer().getItemInHand())) {
 
             //TODO: refactor this without so many switches.  looks awful.
 
@@ -35,7 +35,7 @@ public class HoeListener implements Listener {
                             ItemStack item = event.getPlayer().getItemInHand();
                             Player player = event.getPlayer();
 
-                            int usesLeft = Tools.getUsesLeft(item);
+                            int usesLeft = Tool.getUsesLeft(item);
 
                             if (!Permissions.hasToolPerms(player)) {
                                 return;
@@ -64,7 +64,7 @@ public class HoeListener implements Listener {
                                         break;
                                 }
                                 if (isNotifyTime) {
-                                    Notify.sendNotification(player,item,usesLeft);
+                                    Notify.createToolWarning(player, item, usesLeft);
                                 }
                             }
                             break;

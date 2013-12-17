@@ -3,7 +3,15 @@ package co.proxa.durabilitynotify;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
-public class Tools {
+import java.util.List;
+
+public class Tool {
+
+    private static ListManager lm;
+
+    public Tool(ListManager lm) {
+        this.lm = lm;
+    }
 
     public static int getUsesLeft(ItemStack item) {
         return item.getType().getMaxDurability() - item.getDurability();
@@ -149,6 +157,63 @@ public class Tools {
                 return true;
             default:
                 return false;
+        }
+    }
+
+    public static List<Integer> getToolList(ItemStack is) {
+        switch (is.getType()) {
+            case IRON_PICKAXE:
+                return lm.getIronPickaxe();
+            case IRON_SPADE:
+                return lm.getIronShovel();
+            case IRON_AXE:
+                return lm.getIronAxe();
+            case IRON_SWORD:
+                return lm.getIronSword();
+            case IRON_HOE:
+                return lm.getIronHoe();
+            case DIAMOND_PICKAXE:
+                return lm.getDiamondPickaxe();
+            case DIAMOND_SPADE:
+                return lm.getDiamondShovel();
+            case DIAMOND_AXE:
+                return lm.getDiamondAxe();
+            case DIAMOND_SWORD:
+                return lm.getDiamondSword();
+            case DIAMOND_HOE:
+                return lm.getDiamondHoe();
+            case STONE_PICKAXE:
+                return lm.getStonePickaxe();
+            case STONE_SPADE:
+                return lm.getStoneShovel();
+            case STONE_AXE:
+                return lm.getStoneAxe();
+            case STONE_SWORD:
+                return lm.getStoneSword();
+            case STONE_HOE:
+                return lm.getStoneHoe();
+            case WOOD_PICKAXE:
+                return lm.getWoodenPickaxe();
+            case WOOD_SPADE:
+                return lm.getWoodenShovel();
+            case WOOD_AXE:
+                return lm.getWoodenAxe();
+            case WOOD_HOE:
+                return lm.getWoodenHoe();
+            case WOOD_SWORD:
+                return lm.getWoodenSword();
+            case GOLD_PICKAXE:
+                return lm.getGoldPickaxe();
+            case GOLD_SPADE:
+                return lm.getGoldShovel();
+            case GOLD_AXE:
+                return lm.getGoldAxe();
+            case GOLD_SWORD:
+                return lm.getGoldSword();
+            case GOLD_HOE:
+                return lm.getGoldHoe();
+            default:
+                return null;
         }
     }
 

@@ -25,20 +25,24 @@ public class FishingListener implements Listener {
             return;
         }
 
-        int usesLeft = Tools.getUsesLeft(event.getPlayer().getItemInHand());
+        int usesLeft = Tool.getUsesLeft(event.getPlayer().getItemInHand());
         ItemStack item = event.getPlayer().getItemInHand();
 
         switch (event.getState()) {
             case CAUGHT_FISH:
                 if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
                     if (lm.getFishingRod().contains(usesLeft)) {
-                        Notify.sendNotification(player,item,usesLeft);
+                        Notify.createToolWarning(player, item, usesLeft);
                     }
                 }
                 break;
             case IN_GROUND:
                 if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
-                    Notify.checkImproperToolForLowDurability(player, item, usesLeft);
+                    //TODO TEST
+                    if (lm.getFishingRod().contains(usesLeft) || lm.getFishingRod().contains(usesLeft+1)) {
+                        Notify.createToolWarning(player, item ,usesLeft);
+                        Notify.sendImproperToolWarning(player);
+                    }
                 }
                 break;
             case CAUGHT_ENTITY:

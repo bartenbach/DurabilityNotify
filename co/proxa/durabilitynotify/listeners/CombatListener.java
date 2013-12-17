@@ -10,6 +10,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import co.proxa.durabilitynotify.*;
 
+import java.util.List;
+
 public class CombatListener implements Listener {
 
     private ListManager lm;
@@ -30,36 +32,21 @@ public class CombatListener implements Listener {
             }
 
             ItemStack item = player.getItemInHand();
-            int usesLeft = Tools.getUsesLeft(item);
+            int usesLeft = Tool.getUsesLeft(item);
 
             if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
-                boolean isNotifyTime = false;
-                if (Tools.isSword(item)) {
-                    switch (item.getType()) {
-                        case WOOD_SWORD:
-                            isNotifyTime = lm.getWoodenSword().contains(usesLeft);
-                            break;
-                        case STONE_SWORD:
-                            isNotifyTime = lm.getStoneSword().contains(usesLeft);
-                            break;
-                        case IRON_SWORD:
-                            isNotifyTime = lm.getIronSword().contains(usesLeft);
-                            break;
-                        case GOLD_SWORD:
-                            isNotifyTime = lm.getGoldSword().contains(usesLeft);
-                            break;
-                        case DIAMOND_SWORD:
-                            isNotifyTime = lm.getDiamondSword().contains(usesLeft);
-                            break;
-                        default:
-                            break;
+
+                List<Integer> notifyList = Tool.getToolList(item);
+
+                if (Tool.isSword(item) && notifyList.contains(usesLeft)) {
+                    Notify.createToolWarning(player, item, usesLeft);
+
+                } else {
+
+                    if (notifyList.contains(usesLeft) || notifyList.contains(usesLeft+1)) {
+                        Notify.createToolWarning(player, item, usesLeft);
+                        Notify.sendImproperToolWarning(player);
                     }
-                    if (isNotifyTime) {
-                        Notify.sendNotification(player,item,usesLeft);
-                    }
-                } else if (Tools.isAxe(item)) {
-                    // TODO: not sure how to handle this yet...
-                    Notify.checkImproperToolForLowDurability(player, item, usesLeft);
                 }
             }
         }

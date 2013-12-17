@@ -20,7 +20,7 @@ public class Armor {
 
     private boolean isApproximatePercentage(double currentDurability, List<Integer> configList) {
         for (double d : configList) {
-            if (currentDurability >= (d - 1) && currentDurability <= (d + 1)) {
+            if (currentDurability >= (d - 1.0) && currentDurability <= (d + 1.0)) {
                 return true;
             }
         }
@@ -33,21 +33,21 @@ public class Armor {
         ItemStack leggings = player.getInventory().getLeggings();
         ItemStack boots = player.getInventory().getBoots();
 
-        if (helmet != null) {
-            checkHelmet(player, helmet, getPercentDurabilityLeft(helmet));
+        if (helmet != null && notifyHelmet(helmet, getPercentDurabilityLeft(helmet))) {
+            Notify.createArmorWarning(player, helmet, (int) getPercentDurabilityLeft(helmet));
         }
-        if (chestplate != null) {
-            checkChestplate(player, chestplate, getPercentDurabilityLeft(chestplate));
+        if (chestplate != null && notifyChestplate(chestplate, getPercentDurabilityLeft(chestplate))) {
+            Notify.createArmorWarning(player, chestplate, (int) getPercentDurabilityLeft(chestplate));
         }
-        if (leggings != null) {
-            checkLeggings(player, leggings, getPercentDurabilityLeft(leggings));
+        if (leggings != null && notifyLeggings(leggings, getPercentDurabilityLeft(leggings))) {
+            Notify.createArmorWarning(player, leggings, (int) getPercentDurabilityLeft(leggings));
         }
-        if (player.getInventory().getBoots() != null) {
-            checkboots(player, boots, getPercentDurabilityLeft(boots));
+        if (boots != null && notifyBoots(boots, getPercentDurabilityLeft(boots))) {
+            Notify.createArmorWarning(player, boots, (int) getPercentDurabilityLeft(boots));
         }
     }
 
-    private void checkHelmet(Player player, ItemStack helmet, double durability) {
+    private boolean notifyHelmet(ItemStack helmet, double durability) {
         boolean isNotifyTime = false;
         switch (helmet.getType()) {
             case LEATHER_HELMET:
@@ -66,12 +66,10 @@ public class Armor {
                 isNotifyTime = isApproximatePercentage(durability, lm.getDiamondHelmet());
                 break;
         }
-        if (isNotifyTime) {
-            Notify.createArmorWarning(player, helmet, (int) durability);
-        }
+        return isNotifyTime;
     }
 
-    private void checkChestplate(Player player, ItemStack chestplate, double durability) {
+    private boolean notifyChestplate(ItemStack chestplate, double durability) {
         boolean isNotifyTime = false;
         switch (chestplate.getType()) {
             case LEATHER_CHESTPLATE:
@@ -90,12 +88,10 @@ public class Armor {
                 isNotifyTime = isApproximatePercentage(durability, lm.getDiamondChestplate());
                 break;
         }
-        if (isNotifyTime) {
-            Notify.createArmorWarning(player, chestplate, (int) durability);
-        }
+        return isNotifyTime;
     }
 
-    private void checkLeggings(Player player, ItemStack leggings, double durability) {
+    private boolean notifyLeggings(ItemStack leggings, double durability) {
         boolean isNotifyTime = false;
         switch (leggings.getType()) {
             case LEATHER_LEGGINGS:
@@ -114,12 +110,10 @@ public class Armor {
                 isNotifyTime = isApproximatePercentage(durability, lm.getDiamondLeggings());
                 break;
         }
-        if (isNotifyTime) {
-            Notify.createArmorWarning(player, leggings, (int) durability);
-        }
+        return isNotifyTime;
     }
 
-    private void checkboots(Player player, ItemStack boots, double durability) {
+    private boolean notifyBoots(ItemStack boots, double durability) {
         boolean isNotifyTime = false;
         switch (boots.getType()) {
             case LEATHER_BOOTS:
@@ -138,48 +132,30 @@ public class Armor {
                 isNotifyTime = isApproximatePercentage(durability, lm.getDiamondBoots());
                 break;
         }
-        if (isNotifyTime) {
-            Notify.createArmorWarning(player, boots, (int) durability);
-        }
+        return isNotifyTime;
     }
-
-
-/*    private static void checkDurability(Player player, ItemStack is) {
-        double percentLeft = (100.00 - Armor.getPercentDurabilityLeft(is));
-        if (percentLeft >= 9.0 && percentLeft <= 11.0 && dn.getConfig().getBoolean(Paths.notifyAt10)) {
-            Notify.createArmorWarning(player, is, 10);
-        } else if (percentLeft >= 4.0 && percentLeft <= 6.0 && dn.getConfig().getBoolean(Paths.notifyAt5)) {
-            Notify.createArmorWarning(player, is, 5);
-        } else if (percentLeft == 0 && dn.getConfig().getBoolean(Paths.notifyOnBreak)) {
-            Notify.createArmorWarning(player, is, 0);
-        }
-    }*/
 
     public void checkArmorForReminder(Player player) {
-        if (player.getInventory().getHelmet() != null) {
-            remindDurability(player, player.getInventory().getHelmet());
+        ItemStack helmet = player.getInventory().getHelmet();
+        ItemStack chestplate = player.getInventory().getChestplate();
+        ItemStack leggings = player.getInventory().getLeggings();
+        ItemStack boots = player.getInventory().getBoots();
+
+        if (helmet != null && notifyHelmet(helmet, getPercentDurabilityLeft(helmet))) {
+            Notify.createArmorReminder(player, helmet, (int) getPercentDurabilityLeft(helmet));
         }
-        if (player.getInventory().getChestplate() != null) {
-            remindDurability(player, player.getInventory().getChestplate());
+        if (chestplate != null && notifyChestplate(chestplate, getPercentDurabilityLeft(chestplate))) {
+            Notify.createArmorReminder(player, chestplate, (int) getPercentDurabilityLeft(chestplate));
         }
-        if (player.getInventory().getLeggings() != null) {
-            remindDurability(player, player.getInventory().getLeggings());
+        if (leggings != null && notifyLeggings(leggings, getPercentDurabilityLeft(leggings))) {
+            Notify.createArmorReminder(player, leggings, (int) getPercentDurabilityLeft(leggings));
         }
-        if (player.getInventory().getBoots() != null) {
-            remindDurability(player, player.getInventory().getBoots());
+        if (boots != null && notifyBoots(boots, getPercentDurabilityLeft(boots))) {
+            Notify.createArmorReminder(player, boots, (int) getPercentDurabilityLeft(boots));
         }
     }
 
-    private void remindDurability(Player player, ItemStack is) {
-/*        double percentLeft = (100.00 - getPercentDurabilityLeft(is));
-        if (percentLeft >= 5.0 && percentLeft <= 10.0 && dn.getConfig().getBoolean(Paths.notifyAt10)) {
-            Notify.createArmorReminder(player, is, 10);
-        } else if (percentLeft >= 0.0 && percentLeft <= 5.0 && dn.getConfig().getBoolean(Paths.notifyAt5)) {
-            Notify.createArmorReminder(player, is, 5);
-        }*/
-    }
-
-        public static ChatColor getArmorColor(ItemStack is) {
+    public static ChatColor getArmorColor(ItemStack is) {
         switch (is.getType()) {
             case DIAMOND_CHESTPLATE:
             case DIAMOND_BOOTS:
@@ -210,4 +186,33 @@ public class Armor {
         }
     }
 
+    public void checkArmorCommand(Player player) {
+        ItemStack helmet = player.getInventory().getHelmet();
+        ItemStack chestplate = player.getInventory().getChestplate();
+        ItemStack leggings = player.getInventory().getLeggings();
+        ItemStack boots = player.getInventory().getBoots();
+
+        player.sendMessage(ChatColor.WHITE + "--------------------------");
+        if (helmet != null) {
+            Notify.sendArmorCommandMessage(player, helmet, getPercentDurabilityLeft(helmet));
+        } else {
+            player.sendMessage(ChatColor.GRAY + "Helmet " + ChatColor.WHITE + "-" + ChatColor.GRAY + " none");
+        }
+        if (chestplate != null) {
+            Notify.sendArmorCommandMessage(player, chestplate, getPercentDurabilityLeft(chestplate));
+        } else {
+            player.sendMessage(ChatColor.GRAY + "Chestplate " + ChatColor.WHITE + "-" + ChatColor.GRAY + " none");
+        }
+        if (leggings != null) {
+            Notify.sendArmorCommandMessage(player, leggings, getPercentDurabilityLeft(leggings));
+        } else {
+            player.sendMessage(ChatColor.GRAY + "Leggings " + ChatColor.WHITE + "-" + ChatColor.GRAY + " none");
+        }
+        if (boots != null) {
+            Notify.sendArmorCommandMessage(player, boots, getPercentDurabilityLeft(boots));
+        } else {
+            player.sendMessage(ChatColor.GRAY + "Boots " + ChatColor.WHITE + "-" + ChatColor.GRAY + " none");
+        }
+        player.sendMessage(ChatColor.WHITE + "--------------------------");
+    }
 }

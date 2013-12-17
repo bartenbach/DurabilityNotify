@@ -24,11 +24,11 @@ public class BowListener implements Listener {
                 return;
             }
 
-            int usesLeft = Tools.getUsesLeft(event.getBow());
+            int usesLeft = Tool.getUsesLeft(event.getBow());
 
             if (!LiveNotify.checkLiveNotify(player, event.getBow(), usesLeft)) {
                 if (lm.getBow().contains(usesLeft)) {
-                    Notify.sendNotification(player,event.getBow(),usesLeft);
+                    Notify.createToolWarning(player, event.getBow(), usesLeft);
                 }
             }
         }
