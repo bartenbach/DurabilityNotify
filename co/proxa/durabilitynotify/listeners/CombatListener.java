@@ -39,13 +39,10 @@ public class CombatListener implements Listener {
                 List<Integer> notifyList = Tool.getToolList(item);
 
                 if (Tool.isSword(item) && notifyList.contains(usesLeft)) {
-                    Notify.createToolWarning(player, item, usesLeft);
-
+                    Notify.createToolWarning(player, item, usesLeft, false);
                 } else {
-
                     if (notifyList.contains(usesLeft) || notifyList.contains(usesLeft+1)) {
-                        Notify.createToolWarning(player, item, usesLeft);
-                        Notify.sendImproperToolWarning(player);
+                        Notify.createToolWarning(player, item, usesLeft, true);
                     }
                 }
             }

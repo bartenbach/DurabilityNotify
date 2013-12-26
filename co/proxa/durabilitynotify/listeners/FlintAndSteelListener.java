@@ -32,7 +32,7 @@ public class FlintAndSteelListener implements Listener {
 
             if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
                 if (lm.getFlintAndSteel().contains(usesLeft)) {
-                    Notify.createToolWarning(player, item, usesLeft);
+                    Notify.createToolWarning(player, item, usesLeft, false);
                 }
             }
         }

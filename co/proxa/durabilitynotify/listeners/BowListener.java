@@ -28,7 +28,7 @@ public class BowListener implements Listener {
 
             if (!LiveNotify.checkLiveNotify(player, event.getBow(), usesLeft)) {
                 if (lm.getBow().contains(usesLeft)) {
-                    Notify.createToolWarning(player, event.getBow(), usesLeft);
+                    Notify.createToolWarning(player, event.getBow(), usesLeft, false);
                 }
             }
         }

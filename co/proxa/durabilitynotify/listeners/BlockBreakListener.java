@@ -26,27 +26,20 @@ public class BlockBreakListener implements Listener {
         }
 
         ItemStack item = event.getPlayer().getItemInHand();
-
-        if (!Tool.isPickaxe(item) && !Tool.isAxe(item) && !Tool.isShovel(item) && !Tool.isSword(item)) {
-            return;
-        } //TODO is this check needed?
-
         int usesLeft = Tool.getUsesLeft(item);
 
         if (!LiveNotify.checkLiveNotify(player, item, usesLeft) && usesLeft > 0) {
-
             List<Integer> notifyList = Tool.getToolList(item);
 
-            assert notifyList != null;
-
-            if (Tool.isSword(item)) {
-                if (notifyList.contains(usesLeft) || notifyList.contains(usesLeft+1)) {
-                    Notify.createToolWarning(player, item, usesLeft);
-                    Notify.sendImproperToolWarning(player);
-                }
-            } else {
-                if (notifyList.contains(usesLeft)) {  //TODO test this
-                    Notify.createToolWarning(player, item, usesLeft);
+            if (notifyList != null) {
+                if (Tool.isSword(item)) {
+                    if (notifyList.contains(usesLeft) || notifyList.contains(usesLeft+1)) {
+                        Notify.createToolWarning(player, item, usesLeft, true);
+                    }
+                } else {
+                    if (notifyList.contains(usesLeft)) {
+                        Notify.createToolWarning(player, item, usesLeft, false);
+                    }
                 }
             }
         }

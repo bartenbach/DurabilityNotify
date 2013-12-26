@@ -64,7 +64,7 @@ public class HoeListener implements Listener {
                                         break;
                                 }
                                 if (isNotifyTime) {
-                                    Notify.createToolWarning(player, item, usesLeft);
+                                    Notify.createToolWarning(player, item, usesLeft, false);
                                 }
                             }
                             break;

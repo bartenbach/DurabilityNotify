@@ -9,9 +9,10 @@ import java.text.DecimalFormat;
 
 public class Notify {
 
-    private final static String warn = ChatColor.DARK_RED + "[" + ChatColor.YELLOW +"Warning"+ ChatColor.DARK_RED + "]";
+    private final static String warn = ChatColor.DARK_RED + "[" + ChatColor.YELLOW + "Warning" + ChatColor.DARK_RED + "]";
     private final static String info = ChatColor.WHITE + "[" + ChatColor.GREEN + "Info" + ChatColor.WHITE + "]";
     private final static String remind = ChatColor.WHITE + "[" + ChatColor.GREEN + "Reminder" + ChatColor.WHITE + "]";
+    private final static String improperMsg = warn + ChatColor.YELLOW + " You are also using the wrong tool";
     private final static DecimalFormat df = new DecimalFormat("#.#");
     private static String lastMessage = "";
     private static Player lastPlayer = null;
@@ -21,7 +22,7 @@ public class Notify {
     public static void checkReallyImproperToolForLowDurability(Player player, ItemStack item, int usesLeft) {
         if (Tool.isStringTool(item)) {
             if (usesLeft == 11 || usesLeft == 10 || usesLeft == 9 || usesLeft == 3 || usesLeft == 2 || usesLeft == 1) {
-                createToolWarning(player, item, usesLeft);
+                //createToolWarning(player, item, usesLeft);
             }
         }
     }
@@ -38,9 +39,9 @@ public class Notify {
         } else {
             message = warn + ChatColor.YELLOW + " Your " + color + itemName + ChatColor.YELLOW + grammar + "broken";
             //TODO DEBUG
-            System.out.println(percentLeft);
+           // System.out.println(percentLeft);
         }
-        checkAndSendMessage(player, message);
+        checkAndSendMessage(player, message, false);
     }
 
     public static void createArmorReminder(Player player, ItemStack item, int percentLeft) {
@@ -51,22 +52,22 @@ public class Notify {
             String percent = df.format(percentLeft);
             String message = remind + ChatColor.YELLOW + " Your " + color + itemName  + ChatColor.YELLOW + grammar
                     + "less than " + ChatColor.GRAY + percent + "%" + ChatColor.YELLOW + " durability remaining";
-            checkAndSendMessage(player, message);
+            checkAndSendMessage(player, message, false);
         }
     }
 
-    public static void createToolWarning(Player player, ItemStack item, int usesLeft) {
+    public static void createToolWarning(Player player, ItemStack item, int usesLeft, boolean improper) {
         ChatColor color = Tool.getToolColor(item);
         String itemName = formatName(item);
         String grammar = getGrammar(item);
-        String message = warn + ChatColor.YELLOW + " Your " + color + itemName + ChatColor.YELLOW + grammar
+        String message = "";
+        if (usesLeft > 0) {
+            message = warn + ChatColor.YELLOW + " Your " + color + itemName + ChatColor.YELLOW + grammar
                 + ChatColor.GRAY + usesLeft + ChatColor.YELLOW + (usesLeft == 1 ? " use" : " uses") + " left";
-        checkAndSendMessage(player, message);
-    }
-
-    public static void sendImproperToolWarning(Player player) {
-        String message = warn + ChatColor.YELLOW + " You are also using the wrong tool";
-        checkAndSendMessage(player, message);
+        } else {
+            message = warn + ChatColor.YELLOW + " Your " + color + itemName + ChatColor.YELLOW + grammar + "broken";
+        }
+        checkAndSendMessage(player, message, improper);
     }
 
     public static void createLiveNotification(Player player, ItemStack item, int usesLeft) {
@@ -80,7 +81,7 @@ public class Notify {
         } else {
             message = info + ChatColor.GREEN + " Your " + color + itemName + ChatColor.GREEN + grammar + "broken";
         }
-        checkAndSendMessage(player, message);
+        checkAndSendMessage(player, message, false);
     }
 
     public static void sendArmorCommandMessage(Player player, ItemStack item, double percent) {
@@ -98,11 +99,16 @@ public class Notify {
         }
     }
 
-    private static void checkAndSendMessage(Player player, String message) {
+    private static void checkAndSendMessage(Player player, String message, boolean improper) {
         if ((!message.equals(lastMessage) || message.equals(lastMessage) && player != lastPlayer)) {
             player.sendMessage(message);
             lastMessage = message;
             lastPlayer = player;
+            if (improper) {
+                //TODO Technically this should be past tense if the tool has already broken.  Really being a perfectionist here,
+                // but it is irritating that the grammar is incorrect.  Might be a whore to fix though.
+                player.sendMessage(improperMsg);
+            }
         }
     }
 

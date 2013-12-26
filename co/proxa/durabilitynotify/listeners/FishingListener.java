@@ -32,7 +32,7 @@ public class FishingListener implements Listener {
             case CAUGHT_FISH:
                 if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
                     if (lm.getFishingRod().contains(usesLeft)) {
-                        Notify.createToolWarning(player, item, usesLeft);
+                        Notify.createToolWarning(player, item, usesLeft, false);
                     }
                 }
                 break;
@@ -40,13 +40,13 @@ public class FishingListener implements Listener {
                 if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
                     //TODO TEST
                     if (lm.getFishingRod().contains(usesLeft) || lm.getFishingRod().contains(usesLeft+1)) {
-                        Notify.createToolWarning(player, item ,usesLeft);
-                        Notify.sendImproperToolWarning(player);
+                        Notify.createToolWarning(player, item ,usesLeft, true);
                     }
                 }
                 break;
             case CAUGHT_ENTITY:
                 if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
+                    //TODO fix
                     Notify.checkReallyImproperToolForLowDurability(player, item, usesLeft);
                 }
                 break;

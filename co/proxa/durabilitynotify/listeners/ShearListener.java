@@ -42,7 +42,7 @@ public class ShearListener implements Listener {
 
                     if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
                         if (lm.getShears().contains(usesLeft)) {
-                            Notify.createToolWarning(player, item, usesLeft);
+                            Notify.createToolWarning(player, item, usesLeft, false);
                         }
                     }
 
@@ -65,7 +65,7 @@ public class ShearListener implements Listener {
 
         if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
             if (lm.getShears().contains(usesLeft)) {
-                Notify.createToolWarning(player, item, usesLeft);
+                Notify.createToolWarning(player, item, usesLeft, false);
             }
         }
     }
