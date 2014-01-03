@@ -41,8 +41,10 @@ public class CombatListener implements Listener {
                 if (Tool.isSword(item) && notifyList.contains(usesLeft)) {
                     Notify.createToolWarning(player, item, usesLeft, false);
                 } else {
-                    if (notifyList.contains(usesLeft) || notifyList.contains(usesLeft+1)) {
-                        Notify.createToolWarning(player, item, usesLeft, true);
+                    if (notifyList != null) {
+                        if (notifyList.contains(usesLeft) || notifyList.contains(usesLeft+1)) {
+                            Notify.createToolWarning(player, item, usesLeft, true);
+                        }
                     }
                 }
             }
@@ -71,7 +73,6 @@ public class CombatListener implements Listener {
                 return;
             }
 
-            //TODO Live armor notifications?
             a.checkArmor(player);
         }
     }

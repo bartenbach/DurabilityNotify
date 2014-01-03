@@ -38,8 +38,6 @@ public class Notify {
                     + ChatColor.GRAY + percent + "%" + ChatColor.YELLOW + " durability remaining";
         } else {
             message = warn + ChatColor.YELLOW + " Your " + color + itemName + ChatColor.YELLOW + grammar + "broken";
-            //TODO DEBUG
-           // System.out.println(percentLeft);
         }
         checkAndSendMessage(player, message, false);
     }

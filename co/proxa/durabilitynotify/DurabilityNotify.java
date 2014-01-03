@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * FIXME: Known issues:
- *   1) Improper tool notifications - they probably don't work at all.
+ *   1) Improper tool notifications - working better...still needs work though.
  *   2) That god damn carrot stick
  *
  *   Doing:
