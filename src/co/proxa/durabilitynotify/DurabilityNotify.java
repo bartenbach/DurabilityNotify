@@ -50,7 +50,7 @@ public class DurabilityNotify extends JavaPlugin {
         final Permissions p = new Permissions(this);
         final Tool t = new Tool(lm);
         a = new Armor(lm);
-        final BlockBreakListener bbl = new BlockBreakListener(lm);
+        final BlockBreakListener bbl = new BlockBreakListener();
         final BowListener bl = new BowListener(lm);
         final FishingListener fl = new FishingListener(lm);
         final CombatListener cl = new CombatListener(lm, a);
@@ -83,7 +83,9 @@ public class DurabilityNotify extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        rt.stopThread();
+        if (rt != null) {
+            rt.stopThread();
+        }
         ln.clearMap();
     }
 

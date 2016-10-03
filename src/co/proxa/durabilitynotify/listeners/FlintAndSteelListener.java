@@ -27,7 +27,7 @@ public class FlintAndSteelListener implements Listener {
                 return;
             }
 
-            ItemStack item = event.getPlayer().getItemInHand();
+            ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
             int usesLeft = Tool.getUsesLeft(item);
 
             if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {

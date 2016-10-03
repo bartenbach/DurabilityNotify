@@ -36,7 +36,7 @@ public class ShearListener implements Listener {
                 case DEAD_BUSH:
                 case WOOL:
 
-                    ItemStack item = event.getPlayer().getItemInHand();
+                    ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
 
                     int usesLeft = Tool.getUsesLeft(item);
 
@@ -60,7 +60,7 @@ public class ShearListener implements Listener {
             return;
         }
 
-        ItemStack item = event.getPlayer().getItemInHand();
+        ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
         int usesLeft = Tool.getUsesLeft(item);
 
         if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {

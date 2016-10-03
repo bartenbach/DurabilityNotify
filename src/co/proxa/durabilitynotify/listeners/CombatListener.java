@@ -27,11 +27,11 @@ public class CombatListener implements Listener {
         if (event.getDamager() instanceof Player) {
             Player player = (Player) event.getDamager();
 
-            if (!Permissions.hasToolPerms(player) || player.getItemInHand().getType() == Material.AIR) {
+            if (!Permissions.hasToolPerms(player) || player.getInventory().getItemInMainHand().getType() == Material.AIR) {
                 return;
             }
 
-            ItemStack item = player.getItemInHand();
+            ItemStack item = player.getInventory().getItemInMainHand();
             int usesLeft = Tool.getUsesLeft(item);
 
             if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {

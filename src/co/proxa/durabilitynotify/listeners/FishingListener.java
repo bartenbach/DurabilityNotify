@@ -25,8 +25,8 @@ public class FishingListener implements Listener {
             return;
         }
 
-        int usesLeft = Tool.getUsesLeft(event.getPlayer().getItemInHand());
-        ItemStack item = event.getPlayer().getItemInHand();
+        int usesLeft = Tool.getUsesLeft(event.getPlayer().getInventory().getItemInMainHand());
+        ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
 
         switch (event.getState()) {
             case CAUGHT_FISH:

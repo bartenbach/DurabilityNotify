@@ -21,7 +21,7 @@ public class HoeListener implements Listener {
 
     @EventHandler
     void onPlayerHoeSoil(PlayerInteractEvent event) {
-        if (Tool.isHoe(event.getPlayer().getItemInHand())) {
+        if (Tool.isHoe(event.getPlayer().getInventory().getItemInMainHand())) {
 
             //TODO: refactor this without so many switches.  looks awful.
 
@@ -32,7 +32,7 @@ public class HoeListener implements Listener {
                         case DIRT:
                         case GRASS:
 
-                            ItemStack item = event.getPlayer().getItemInHand();
+                            ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
                             Player player = event.getPlayer();
 
                             int usesLeft = Tool.getUsesLeft(item);

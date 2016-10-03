@@ -11,12 +11,6 @@ import java.util.List;
 
 public class BlockBreakListener implements Listener {
 
-    private ListManager lm;
-
-    public BlockBreakListener(ListManager lm) {
-        this.lm = lm;
-    }
-
     @EventHandler
     void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
@@ -25,7 +19,7 @@ public class BlockBreakListener implements Listener {
             return;
         }
 
-        ItemStack item = event.getPlayer().getItemInHand();
+        ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
         int usesLeft = Tool.getUsesLeft(item);
 
         if (!LiveNotify.checkLiveNotify(player, item, usesLeft) && usesLeft > 0) {

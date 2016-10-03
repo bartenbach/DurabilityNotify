@@ -1,0 +1,4 @@
+out/*
+..gitignore.un~
+.gitignore~
+.idea/*
