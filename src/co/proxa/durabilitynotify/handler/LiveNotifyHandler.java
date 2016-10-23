@@ -1,12 +1,13 @@
-package co.proxa.durabilitynotify;
+package co.proxa.durabilitynotify.handler;
 
+import co.proxa.durabilitynotify.file.ConfigHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
-public class LiveNotify {
+public class LiveNotifyHandler {
 
     private static HashMap<String,Boolean> liveNotifications = new HashMap<String, Boolean>();
 
@@ -28,15 +29,15 @@ public class LiveNotify {
 
     public void sendMessage(Player player) {
         if (liveNotifications.get(player.getName())) {
-            player.sendMessage(ChatColor.GREEN + "[Live durability notifications on]");
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigHandler.liveNotifyOnMsg));
         } else {
-            player.sendMessage(ChatColor.DARK_RED + "[Live durability notifications off]");
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigHandler.liveNotifyOffMsg));
         }
     }
 
     public static boolean checkLiveNotify(Player player, ItemStack item, int usesLeft) {
         if (onMap(player) && notifyOn(player)) {
-            Notify.createLiveNotification(player, item, usesLeft);
+            NotifyHandler.createLiveNotification(player, item, usesLeft);
             return true;
         }
         return false;

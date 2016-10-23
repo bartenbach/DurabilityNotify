@@ -1,5 +1,7 @@
 package co.proxa.durabilitynotify.listeners;
 
+import co.proxa.durabilitynotify.file.ConfigHandler;
+import co.proxa.durabilitynotify.handler.*;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,16 +10,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
-import co.proxa.durabilitynotify.*;
 
 import java.util.List;
 
 public class CombatListener implements Listener {
 
-    private ListManager lm;
-    private Armor a;
+    private ConfigHandler lm;
+    private ArmorHandler a;
 
-    public CombatListener (ListManager lm, Armor a) {
+    public CombatListener (ConfigHandler lm, ArmorHandler a) {
         this.lm = lm;
         this.a = a;
     }
@@ -27,23 +28,23 @@ public class CombatListener implements Listener {
         if (event.getDamager() instanceof Player) {
             Player player = (Player) event.getDamager();
 
-            if (!Permissions.hasToolPerms(player) || player.getInventory().getItemInMainHand().getType() == Material.AIR) {
+            if (!PermissionsHandler.hasToolPerms(player) || player.getInventory().getItemInMainHand().getType() == Material.AIR) {
                 return;
             }
 
             ItemStack item = player.getInventory().getItemInMainHand();
-            int usesLeft = Tool.getUsesLeft(item);
+            int usesLeft = ToolHandler.getUsesLeft(item);
 
-            if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
+            if (!LiveNotifyHandler.checkLiveNotify(player, item, usesLeft)) {
 
-                List<Integer> notifyList = Tool.getToolList(item);
+                List<Integer> notifyList = ToolHandler.getToolList(item);
 
-                if (Tool.isSword(item) && notifyList.contains(usesLeft)) {
-                    Notify.createToolWarning(player, item, usesLeft, false);
+                if (ToolHandler.isSword(item) && notifyList.contains(usesLeft)) {
+                    NotifyHandler.createToolWarning(player, item, usesLeft, false);
                 } else {
                     if (notifyList != null) {
                         if (notifyList.contains(usesLeft) || notifyList.contains(usesLeft+1)) {
-                            Notify.createToolWarning(player, item, usesLeft, true);
+                            NotifyHandler.createToolWarning(player, item, usesLeft, true);
                         }
                     }
                 }
@@ -57,7 +58,7 @@ public class CombatListener implements Listener {
 
             Player player = (Player) event.getEntity();
 
-            if (!Permissions.hasArmorPerms(player)) {
+            if (!PermissionsHandler.hasArmorPerms(player)) {
                 return;
             }
 

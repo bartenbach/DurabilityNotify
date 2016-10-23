@@ -1,5 +1,6 @@
-package co.proxa.durabilitynotify;
+package co.proxa.durabilitynotify.handler;
 
+import co.proxa.durabilitynotify.file.ConfigHandler;
 import org.apache.commons.lang3.text.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -7,83 +8,102 @@ import org.bukkit.inventory.ItemStack;
 
 import java.text.DecimalFormat;
 
-public class Notify {
+public class NotifyHandler {
 
-    private final static String warn = ChatColor.DARK_RED + "[" + ChatColor.YELLOW + "Warning" + ChatColor.DARK_RED + "]";
-    private final static String info = ChatColor.WHITE + "[" + ChatColor.GREEN + "Info" + ChatColor.WHITE + "]";
-    private final static String remind = ChatColor.WHITE + "[" + ChatColor.GREEN + "Reminder" + ChatColor.WHITE + "]";
-    private final static String improperMsg = warn + ChatColor.YELLOW + " You are also using the wrong tool";
     private final static DecimalFormat df = new DecimalFormat("#.#");
     private static String lastMessage = "";
     private static Player lastPlayer = null;
 
     //Only known use for this is fishing rods being cast into mobs.  It deals 3 durability damage
     //FIXME bogus as fuck
-    public static void checkReallyImproperToolForLowDurability(Player player, ItemStack item, int usesLeft) {
-        if (Tool.isStringTool(item)) {
+/*    public static void checkReallyImproperToolForLowDurability(Player player, ItemStack item, int usesLeft) {
+        if (ToolHandler.isStringTool(item)) {
             if (usesLeft == 11 || usesLeft == 10 || usesLeft == 9 || usesLeft == 3 || usesLeft == 2 || usesLeft == 1) {
                 //createToolWarning(player, item, usesLeft);
             }
         }
-    }
+    }*/
 
     public static void createArmorWarning(Player player, ItemStack item, int percentLeft) {
-        ChatColor color = Armor.getArmorColor(item);
+        ChatColor color = ArmorHandler.getArmorColor(item);
         String itemName = formatName(item);
         String grammar = getGrammar(item);
         String percent = df.format(percentLeft);
         String message;
         if (percentLeft > 0) {
-            message = warn + ChatColor.YELLOW + " Your " + color + itemName + ChatColor.YELLOW + grammar
-                    + ChatColor.GRAY + percent + "%" + ChatColor.YELLOW + " durability remaining";
+            message = ChatColor.translateAlternateColorCodes('&',
+                    ConfigHandler.armorWarningMsg.replaceAll("%COLOR%", color.toString())
+                            .replace("%ITEM%", itemName)
+                            .replace("%PERCENT%", percent + "%")
+                            .replace("%GRAMMAR%", grammar));
         } else {
-            message = warn + ChatColor.YELLOW + " Your " + color + itemName + ChatColor.YELLOW + grammar + "broken";
+            message = ChatColor.translateAlternateColorCodes('&',
+                    ConfigHandler.armorWarningMsg.replaceAll("%COLOR%", color.toString())
+                            .replace("%ITEM%", itemName)
+                            .replace("%GRAMMAR%", grammar));
         }
         checkAndSendMessage(player, message, false);
     }
 
     public static void createArmorReminder(Player player, ItemStack item, int percentLeft) {
         if (percentLeft > 0) {
-            ChatColor color = Armor.getArmorColor(item);
+            ChatColor color = ArmorHandler.getArmorColor(item);
             String itemName = formatName(item);
             String grammar = getGrammar(item);
             String percent = df.format(percentLeft);
-            String message = remind + ChatColor.YELLOW + " Your " + color + itemName  + ChatColor.YELLOW + grammar
-                    + "less than " + ChatColor.GRAY + percent + "%" + ChatColor.YELLOW + " durability remaining";
+            String message = ChatColor.translateAlternateColorCodes('&',
+                    ConfigHandler.reminderMsg.replaceAll("%COLOR%", color.toString())
+                            .replace("%ITEM%", itemName)
+                            .replace("%PERCENT%", percent + "%")
+                            .replace("%GRAMMAR%", grammar));
             checkAndSendMessage(player, message, false);
         }
     }
 
     public static void createToolWarning(Player player, ItemStack item, int usesLeft, boolean improper) {
-        ChatColor color = Tool.getToolColor(item);
+        ChatColor color = ToolHandler.getToolColor(item);
         String itemName = formatName(item);
         String grammar = getGrammar(item);
         String message = "";
         if (usesLeft > 0) {
-            message = warn + ChatColor.YELLOW + " Your " + color + itemName + ChatColor.YELLOW + grammar
-                + ChatColor.GRAY + usesLeft + ChatColor.YELLOW + (usesLeft == 1 ? " use" : " uses") + " left";
+            message = ChatColor.translateAlternateColorCodes('&',
+                    ConfigHandler.toolWarningMsg.replaceAll("%COLOR%", color.toString())
+                            .replace("%ITEM%", itemName)
+                            .replace("%USES%", String.valueOf(usesLeft))
+                            .replace("%GRAMMAR2%", getGrammar2(usesLeft))
+                            .replace("%GRAMMAR%", grammar));
         } else {
-            message = warn + ChatColor.YELLOW + " Your " + color + itemName + ChatColor.YELLOW + grammar + "broken";
+            //FIXME this never executes because i'm checking for uses > 0 ?
+            message = ChatColor.translateAlternateColorCodes('&',
+                    ConfigHandler.toolWarningBroken.replaceAll("%COLOR%", color.toString())
+                            .replace("%ITEM%", itemName)
+                            .replace("%GRAMMAR%", grammar));
         }
         checkAndSendMessage(player, message, improper);
     }
 
     public static void createLiveNotification(Player player, ItemStack item, int usesLeft) {
-        ChatColor color = Tool.getToolColor(item);
+        ChatColor color = ToolHandler.getToolColor(item);
         String itemName = formatName(item);
         String grammar = getGrammar(item);
         String message;
         if (usesLeft > 0) {
-            message = info + ChatColor.GREEN + " Your " + color + itemName + ChatColor.GREEN + grammar
-                    + ChatColor.WHITE + usesLeft + ChatColor.GREEN + " uses left";
+            message = ChatColor.translateAlternateColorCodes('&',
+                    ConfigHandler.infoMsg.replaceAll("%COLOR%", color.toString())
+                            .replace("%ITEM%", itemName)
+                            .replace("%USES%", String.valueOf(usesLeft))
+                            .replace("%GRAMMAR%", grammar));
         } else {
-            message = info + ChatColor.GREEN + " Your " + color + itemName + ChatColor.GREEN + grammar + "broken";
+            message = ChatColor.translateAlternateColorCodes('&',
+                    ConfigHandler.infoBroken.replaceAll("%COLOR%", color.toString())
+                            .replace("%ITEM%", itemName)
+                            .replace("%GRAMMAR%", grammar));
         }
         checkAndSendMessage(player, message, false);
     }
 
     public static void sendArmorCommandMessage(Player player, ItemStack item, double percent) {
-        player.sendMessage(Armor.getArmorColor(item) + WordUtils.capitalize(formatName(item)) + ChatColor.WHITE + " - "
+        player.sendMessage(ArmorHandler.getArmorColor(item) + WordUtils.capitalize(formatName(item)) + ChatColor.WHITE + " - "
                 + getColorByPercent(percent) + df.format(percent) + ChatColor.RESET + "%");
     }
 
@@ -98,6 +118,7 @@ public class Notify {
     }
 
     private static void checkAndSendMessage(Player player, String message, boolean improper) {
+        // this was an attempt at spam protection, but it breaks reminders completely
         if ((!message.equals(lastMessage) || message.equals(lastMessage) && player != lastPlayer)) {
             player.sendMessage(message);
             lastMessage = message;
@@ -105,7 +126,7 @@ public class Notify {
             if (improper) {
                 //TODO Technically this should be past tense if the tool has already broken.  Really being a perfectionist here,
                 // but it is irritating that the grammar is incorrect.  Might be a whore to fix though.
-                player.sendMessage(improperMsg);
+                player.sendMessage(ConfigHandler.improperToolMsg);
             }
         }
     }
@@ -127,9 +148,16 @@ public class Notify {
             case DIAMOND_LEGGINGS:
             case DIAMOND_BOOTS:
             case SHEARS:
-                return " have ";
+                return ConfigHandler.grammarPlural;
             default:
-                return " has ";
+                return ConfigHandler.grammarSingular;
         }
+    }
+
+    private static String getGrammar2(int uses) {
+        if (uses > 1) {
+            return ConfigHandler.grammar2Plural;
+        }
+        return ConfigHandler.grammar2Singular;
     }
 }

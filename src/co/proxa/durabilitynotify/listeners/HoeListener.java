@@ -1,6 +1,10 @@
 package co.proxa.durabilitynotify.listeners;
 
-import co.proxa.durabilitynotify.*;
+import co.proxa.durabilitynotify.file.ConfigHandler;
+import co.proxa.durabilitynotify.handler.LiveNotifyHandler;
+import co.proxa.durabilitynotify.handler.NotifyHandler;
+import co.proxa.durabilitynotify.handler.PermissionsHandler;
+import co.proxa.durabilitynotify.handler.ToolHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,9 +13,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class HoeListener implements Listener {
 
-    private ListManager lm;
+    private ConfigHandler lm;
 
-    public HoeListener(ListManager lm) {
+    public HoeListener(ConfigHandler lm) {
         this.lm = lm;
     }
 
@@ -21,7 +25,7 @@ public class HoeListener implements Listener {
 
     @EventHandler
     void onPlayerHoeSoil(PlayerInteractEvent event) {
-        if (Tool.isHoe(event.getPlayer().getInventory().getItemInMainHand())) {
+        if (ToolHandler.isHoe(event.getPlayer().getInventory().getItemInMainHand())) {
 
             //TODO: refactor this without so many switches.  looks awful.
 
@@ -35,13 +39,13 @@ public class HoeListener implements Listener {
                             ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
                             Player player = event.getPlayer();
 
-                            int usesLeft = Tool.getUsesLeft(item);
+                            int usesLeft = ToolHandler.getUsesLeft(item);
 
-                            if (!Permissions.hasToolPerms(player)) {
+                            if (!PermissionsHandler.hasToolPerms(player)) {
                                 return;
                             }
 
-                            if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
+                            if (!LiveNotifyHandler.checkLiveNotify(player, item, usesLeft)) {
                                 boolean isNotifyTime = false;
 
                                 switch (item.getType()) {
@@ -64,7 +68,7 @@ public class HoeListener implements Listener {
                                         break;
                                 }
                                 if (isNotifyTime) {
-                                    Notify.createToolWarning(player, item, usesLeft, false);
+                                    NotifyHandler.createToolWarning(player, item, usesLeft, false);
                                 }
                             }
                             break;

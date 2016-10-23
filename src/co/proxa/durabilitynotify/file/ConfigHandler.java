@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package co.proxa.durabilitynotify;
+package co.proxa.durabilitynotify.file;
 
-import co.proxa.durabilitynotify.file.Paths;
+import co.proxa.durabilitynotify.DurabilityNotify;
 
 import java.util.List;
 
-public class ListManager {
+public class ConfigHandler {
 
     private DurabilityNotify dn;
     private List<Integer> woodenPickaxe;
@@ -73,8 +73,22 @@ public class ListManager {
     private List<Integer> diamondChestplate;
     private List<Integer> diamondLeggings;
     private List<Integer> diamondBoots;
+    public static String reminderMsg;
+    public static String liveNotifyOnMsg;
+    public static String liveNotifyOffMsg;
+    public static String infoMsg;
+    public static String toolWarningMsg;
+    public static String toolWarningBroken;
+    public static String armorWarningMsg;
+    public static String armorWarningBroken;
+    public static String infoBroken;
+    public static String improperToolMsg;
+    public static String grammarSingular;
+    public static String grammarPlural;
+    public static String grammar2Singular;
+    public static String grammar2Plural;
 
-    public ListManager(DurabilityNotify dn) {
+    public ConfigHandler(DurabilityNotify dn) {
         this.dn = dn;
     }
 
@@ -129,6 +143,20 @@ public class ListManager {
         diamondChestplate = dn.getConfig().getIntegerList(Paths.diamondChestplate);
         diamondLeggings = dn.getConfig().getIntegerList(Paths.diamondLeggings);
         diamondBoots = dn.getConfig().getIntegerList(Paths.diamondBoots);
+        reminderMsg = dn.getConfig().getString(Paths.reminderMsg);
+        liveNotifyOffMsg = dn.getConfig().getString(Paths.liveDuraOffMsg);
+        liveNotifyOnMsg = dn.getConfig().getString(Paths.liveDuraOnMsg);
+        infoMsg = dn.getConfig().getString(Paths.infoMsg);
+        infoBroken = dn.getConfig().getString(Paths.infoBrokenMsg);
+        toolWarningMsg = dn.getConfig().getString(Paths.toolWarningMsg);
+        toolWarningBroken = dn.getConfig().getString(Paths.toolWarningBrokenMsg);
+        armorWarningMsg = dn.getConfig().getString(Paths.armorWarningMsg);
+        armorWarningBroken = dn.getConfig().getString(Paths.armorWarningBrokenMsg);
+        improperToolMsg = dn.getConfig().getString(Paths.improperToolMsg);
+        grammarSingular = dn.getConfig().getString(Paths.grammarSingular);
+        grammarPlural = dn.getConfig().getString(Paths.grammarPlural);
+        grammar2Singular = dn.getConfig().getString(Paths.grammar2Singular);
+        grammar2Plural = dn.getConfig().getString(Paths.grammar2Plural);
     }
 
     public List<Integer> getWoodenPickaxe() {

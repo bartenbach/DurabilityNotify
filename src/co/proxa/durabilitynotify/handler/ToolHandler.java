@@ -1,16 +1,17 @@
-package co.proxa.durabilitynotify;
+package co.proxa.durabilitynotify.handler;
 
+import co.proxa.durabilitynotify.file.ConfigHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class Tool {
+public class ToolHandler {
 
-    private static ListManager lm;
+    private static ConfigHandler configHandler;
 
-    public Tool(ListManager lm) {
-        this.lm = lm;
+    public ToolHandler(ConfigHandler config) {
+        configHandler = config;
     }
 
     public static int getUsesLeft(ItemStack item) {
@@ -163,55 +164,55 @@ public class Tool {
     public static List<Integer> getToolList(ItemStack is) {
         switch (is.getType()) {
             case IRON_PICKAXE:
-                return lm.getIronPickaxe();
+                return configHandler.getIronPickaxe();
             case IRON_SPADE:
-                return lm.getIronShovel();
+                return configHandler.getIronShovel();
             case IRON_AXE:
-                return lm.getIronAxe();
+                return configHandler.getIronAxe();
             case IRON_SWORD:
-                return lm.getIronSword();
+                return configHandler.getIronSword();
             case IRON_HOE:
-                return lm.getIronHoe();
+                return configHandler.getIronHoe();
             case DIAMOND_PICKAXE:
-                return lm.getDiamondPickaxe();
+                return configHandler.getDiamondPickaxe();
             case DIAMOND_SPADE:
-                return lm.getDiamondShovel();
+                return configHandler.getDiamondShovel();
             case DIAMOND_AXE:
-                return lm.getDiamondAxe();
+                return configHandler.getDiamondAxe();
             case DIAMOND_SWORD:
-                return lm.getDiamondSword();
+                return configHandler.getDiamondSword();
             case DIAMOND_HOE:
-                return lm.getDiamondHoe();
+                return configHandler.getDiamondHoe();
             case STONE_PICKAXE:
-                return lm.getStonePickaxe();
+                return configHandler.getStonePickaxe();
             case STONE_SPADE:
-                return lm.getStoneShovel();
+                return configHandler.getStoneShovel();
             case STONE_AXE:
-                return lm.getStoneAxe();
+                return configHandler.getStoneAxe();
             case STONE_SWORD:
-                return lm.getStoneSword();
+                return configHandler.getStoneSword();
             case STONE_HOE:
-                return lm.getStoneHoe();
+                return configHandler.getStoneHoe();
             case WOOD_PICKAXE:
-                return lm.getWoodenPickaxe();
+                return configHandler.getWoodenPickaxe();
             case WOOD_SPADE:
-                return lm.getWoodenShovel();
+                return configHandler.getWoodenShovel();
             case WOOD_AXE:
-                return lm.getWoodenAxe();
+                return configHandler.getWoodenAxe();
             case WOOD_HOE:
-                return lm.getWoodenHoe();
+                return configHandler.getWoodenHoe();
             case WOOD_SWORD:
-                return lm.getWoodenSword();
+                return configHandler.getWoodenSword();
             case GOLD_PICKAXE:
-                return lm.getGoldPickaxe();
+                return configHandler.getGoldPickaxe();
             case GOLD_SPADE:
-                return lm.getGoldShovel();
+                return configHandler.getGoldShovel();
             case GOLD_AXE:
-                return lm.getGoldAxe();
+                return configHandler.getGoldAxe();
             case GOLD_SWORD:
-                return lm.getGoldSword();
+                return configHandler.getGoldSword();
             case GOLD_HOE:
-                return lm.getGoldHoe();
+                return configHandler.getGoldHoe();
             default:
                 return null;
         }

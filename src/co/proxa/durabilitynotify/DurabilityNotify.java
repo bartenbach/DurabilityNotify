@@ -27,7 +27,9 @@
 
 package co.proxa.durabilitynotify;
 
+import co.proxa.durabilitynotify.file.ConfigHandler;
 import co.proxa.durabilitynotify.file.Paths;
+import co.proxa.durabilitynotify.handler.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -35,21 +37,20 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import co.proxa.durabilitynotify.file.FileHandler;
 import co.proxa.durabilitynotify.listeners.*;
-import co.proxa.durabilitynotify.threads.ReminderThread;
+import co.proxa.durabilitynotify.runnable.ReminderRunnable;
 
 public class DurabilityNotify extends JavaPlugin {
 
-    private final LiveNotify ln = new LiveNotify();
-    private Armor a;
-    private ReminderThread rt;
+    private final LiveNotifyHandler ln = new LiveNotifyHandler();
+    private final FileHandler fh = new FileHandler(this);
+    private final ConfigHandler lm = new ConfigHandler(this);
+    private final PermissionsHandler ph = new PermissionsHandler(this);
+    private ArmorHandler a;
 
     @Override
     public void onEnable() {
-        final FileHandler fh = new FileHandler(this);
-        final ListManager lm = new ListManager(this);
-        final Permissions p = new Permissions(this);
-        final Tool t = new Tool(lm);
-        a = new Armor(lm);
+        final ToolHandler t = new ToolHandler(lm);
+        a = new ArmorHandler(lm);
         final BlockBreakListener bbl = new BlockBreakListener();
         final BowListener bl = new BowListener(lm);
         final FishingListener fl = new FishingListener(lm);
@@ -58,7 +59,7 @@ public class DurabilityNotify extends JavaPlugin {
         final FlintAndSteelListener fasl = new FlintAndSteelListener(lm);
         final ShearListener sl = new ShearListener(lm);
         final PluginManager pm = getServer().getPluginManager();
-        final Notify n = new Notify();
+        final NotifyHandler n = new NotifyHandler();
 
         this.checkReminderThread(a);
         fh.checkFiles();
@@ -73,33 +74,29 @@ public class DurabilityNotify extends JavaPlugin {
         pm.registerEvents(sl, this);
     }
 
-    private void checkReminderThread(Armor a) {
+    private void checkReminderThread(ArmorHandler a) {
         if (this.getConfig().getBoolean(Paths.reminderEnabled)) {
-            int minutes = this.getConfig().getInt(Paths.reminderMinutes);
-            rt = new ReminderThread(this, a, minutes);
-            rt.startThread();
+            int minutes = this.getConfig().getInt(Paths.reminderMinutes) * 20 * 60;
+            getServer().getScheduler().runTaskTimer(this, new ReminderRunnable(this), minutes, minutes);
         }
     }
 
     @Override
     public void onDisable() {
-        if (rt != null) {
-            rt.stopThread();
-        }
         ln.clearMap();
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player && Permissions.hasToolPerms((Player) sender) && label.equalsIgnoreCase("dura")) {
+        if (sender instanceof Player && PermissionsHandler.hasToolPerms((Player) sender) && label.equalsIgnoreCase("dura")) {
             if (ln.onMap((Player)sender)) {
                 ln.toggleNotify((Player)sender);
             } else {
-                LiveNotify.putPlayerOnMap((Player)sender);
+                LiveNotifyHandler.putPlayerOnMap((Player)sender);
             }
             ln.sendMessage((Player)sender);
             return true;
-        } else if (sender instanceof Player && Permissions.hasArmorPerms((Player) sender) && label.startsWith("arm")) {
+        } else if (sender instanceof Player && PermissionsHandler.hasArmorPerms((Player) sender) && label.startsWith("arm")) {
             a.checkArmorCommand((Player) sender);
             return true;
         }

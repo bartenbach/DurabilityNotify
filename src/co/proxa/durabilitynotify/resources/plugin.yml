@@ -1,7 +1,7 @@
 name: DurabilityNotify
 main: co.proxa.durabilitynotify.DurabilityNotify
 author: proxa
-version: 0.7
+version: 0.8
 description: Reminds players when their tools and/or armor are at low durability
 
 commands:

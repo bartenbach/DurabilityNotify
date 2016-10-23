@@ -1,6 +1,9 @@
 package co.proxa.durabilitynotify.listeners;
 
-import co.proxa.durabilitynotify.*;
+import co.proxa.durabilitynotify.handler.LiveNotifyHandler;
+import co.proxa.durabilitynotify.handler.NotifyHandler;
+import co.proxa.durabilitynotify.handler.PermissionsHandler;
+import co.proxa.durabilitynotify.handler.ToolHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,24 +18,24 @@ public class BlockBreakListener implements Listener {
     void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
 
-        if (!Permissions.hasToolPerms(player)) {
+        if (!PermissionsHandler.hasToolPerms(player)) {
             return;
         }
 
         ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
-        int usesLeft = Tool.getUsesLeft(item);
+        int usesLeft = ToolHandler.getUsesLeft(item);
 
-        if (!LiveNotify.checkLiveNotify(player, item, usesLeft) && usesLeft > 0) {
-            List<Integer> notifyList = Tool.getToolList(item);
+        if (!LiveNotifyHandler.checkLiveNotify(player, item, usesLeft) && usesLeft > 0) {
+            List<Integer> notifyList = ToolHandler.getToolList(item);
 
             if (notifyList != null) {
-                if (Tool.isSword(item)) {
+                if (ToolHandler.isSword(item)) {
                     if (notifyList.contains(usesLeft) || notifyList.contains(usesLeft+1)) {
-                        Notify.createToolWarning(player, item, usesLeft, true);
+                        NotifyHandler.createToolWarning(player, item, usesLeft, true);
                     }
                 } else {
                     if (notifyList.contains(usesLeft)) {
-                        Notify.createToolWarning(player, item, usesLeft, false);
+                        NotifyHandler.createToolWarning(player, item, usesLeft, false);
                     }
                 }
             }

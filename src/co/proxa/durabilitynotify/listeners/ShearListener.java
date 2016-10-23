@@ -1,6 +1,10 @@
 package co.proxa.durabilitynotify.listeners;
 
-import co.proxa.durabilitynotify.*;
+import co.proxa.durabilitynotify.file.ConfigHandler;
+import co.proxa.durabilitynotify.handler.LiveNotifyHandler;
+import co.proxa.durabilitynotify.handler.NotifyHandler;
+import co.proxa.durabilitynotify.handler.PermissionsHandler;
+import co.proxa.durabilitynotify.handler.ToolHandler;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,9 +16,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class ShearListener implements Listener {
 
-    private ListManager lm;
+    private ConfigHandler lm;
 
-    public ShearListener(ListManager lm) {
+    public ShearListener(ConfigHandler lm) {
         this.lm = lm;
     }
 
@@ -24,7 +28,7 @@ public class ShearListener implements Listener {
 
             Player player = event.getPlayer();
 
-            if (!Permissions.hasToolPerms(player)) {
+            if (!PermissionsHandler.hasToolPerms(player)) {
                 return;
             }  //TODO This whole class was so not tested
 
@@ -38,11 +42,11 @@ public class ShearListener implements Listener {
 
                     ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
 
-                    int usesLeft = Tool.getUsesLeft(item);
+                    int usesLeft = ToolHandler.getUsesLeft(item);
 
-                    if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
+                    if (!LiveNotifyHandler.checkLiveNotify(player, item, usesLeft)) {
                         if (lm.getShears().contains(usesLeft)) {
-                            Notify.createToolWarning(player, item, usesLeft, false);
+                            NotifyHandler.createToolWarning(player, item, usesLeft, false);
                         }
                     }
 
@@ -56,16 +60,16 @@ public class ShearListener implements Listener {
     void onPlayerShearSheep(PlayerShearEntityEvent event) {
         Player player = event.getPlayer();
 
-        if (!Permissions.hasToolPerms(player)) {
+        if (!PermissionsHandler.hasToolPerms(player)) {
             return;
         }
 
         ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
-        int usesLeft = Tool.getUsesLeft(item);
+        int usesLeft = ToolHandler.getUsesLeft(item);
 
-        if (!LiveNotify.checkLiveNotify(player, item, usesLeft)) {
+        if (!LiveNotifyHandler.checkLiveNotify(player, item, usesLeft)) {
             if (lm.getShears().contains(usesLeft)) {
-                Notify.createToolWarning(player, item, usesLeft, false);
+                NotifyHandler.createToolWarning(player, item, usesLeft, false);
             }
         }
     }

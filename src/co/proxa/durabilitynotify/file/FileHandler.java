@@ -4,7 +4,9 @@ import co.proxa.durabilitynotify.DurabilityNotify;
 
 public class FileHandler {
 
+
     private DurabilityNotify dn;
+
 
     public FileHandler(DurabilityNotify dn) {
         this.dn = dn;

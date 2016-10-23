@@ -66,3 +66,18 @@ DurabilityNotify Configuration:
   Timed Reminders:
     Enabled: false
     Minutes: 30
+  Messages:
+    Live Durability on: "&2[Live durability notifications on]"
+    Live Durability off: "&4[Live durability notifications off]"
+    ToolWarning: "&4[&eWarning&4] &eYour %COLOR%%ITEM% &e%GRAMMAR% &7%USES% &e%GRAMMAR2% left"
+    ToolWarningBroken: "&4[&eWarning&4] &eYour %COLOR%%ITEM% &e%GRAMMAR% broken"
+    ArmorWarning: "&4[&eWarning&4] &eYour %COLOR%%ITEM% &e%GRAMMAR% &7%PERCENT%% &edurability remaining"
+    ArmorWarningBroken: "&4[&eWarning&4] &eYour %COLOR%%ITEM% &e%GRAMMAR% broken"
+    Info: "&f[&aInfo&f] &aYour %COLOR%%ITEM% &a%GRAMMAR% &f%USES% &auses left"
+    InfoBroken: "&f[&aInfo&f] &aYour %COLOR%%ITEM% &e%GRAMMAR% broken"
+    Reminder: "&f[&aReminder&f] &eYour %COLOR%%ITEM% &e%GRAMMAR% less than %COLOR%%PERCENT% &edurability remaining"
+    Improper Tool Message: "&4[&eWarning&4]&e You are also using the wrong tool"
+    Grammar Singular: "has"
+    Grammar Plural: "have"
+    Grammar2 Singular: "use"
+    Grammar2 Plural: "uses"
